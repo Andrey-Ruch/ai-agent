@@ -11,7 +11,7 @@ import { SessionStatus } from './type'
 // Utilities
 import { RealtimeClient } from '@/app/agentConfigs/realtimeClient'
 import useAudioDownload from '@/hooks/useAudioDownload'
-import { chatAgent } from '@/app/agentConfigs/chatSupervisor'
+import { agent } from '@/app/agentConfigs/chatSupervisor'
 
 export default function App() {
     const audioElementRef = useRef<HTMLAudioElement | null>(null)
@@ -35,7 +35,7 @@ export default function App() {
 
     const sdkClientRef = useRef<RealtimeClient | null>(null)
     const [sessionStatus, setSessionStatus] = useState<SessionStatus>('DISCONNECTED')
-    const [isPTTActive, setIsPTTActive] = useState<boolean>(false)
+    const [isPTTActive, setIsPTTActive] = useState<boolean>(false) // false
     const [isPTTUserSpeaking, setIsPTTUserSpeaking] = useState<boolean>(false)
     const [isAudioPlaybackEnabled, setIsAudioPlaybackEnabled] = useState<boolean>(() => {
         if (typeof window === 'undefined') return true
@@ -60,7 +60,9 @@ export default function App() {
     }
 
     useEffect(() => {
-        connectToRealtime()
+        if (sessionStatus === 'DISCONNECTED') {
+            connectToRealtime()
+        }
     }, [])
 
     useEffect(() => {
@@ -96,7 +98,7 @@ export default function App() {
 
             const client = new RealtimeClient({
                 getEphemeralKey: async () => EPHEMERAL_KEY,
-                initialAgent: chatAgent,
+                initialAgent: agent,
                 audioElement: sdkAudioElement,
             } as any)
 
@@ -123,6 +125,7 @@ export default function App() {
         }
         setSessionStatus('DISCONNECTED')
         setIsPTTUserSpeaking(false)
+        setIsPTTActive(false)
     }
 
     const sendSimulatedUserMessage = (text: string) => {
@@ -159,6 +162,7 @@ export default function App() {
             // `session.update` event.
             const client = sdkClientRef.current
             if (client) {
+                console.log('updateSession, isPTTActive =', isPTTActive)
                 const turnDetection = isPTTActive
                     ? null
                     : {

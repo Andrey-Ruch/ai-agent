@@ -1,20 +1,19 @@
-import { RealtimeAgent } from '@openai/agents-realtime'
+import { tool, RealtimeAgent } from '@openai/agents-realtime'
+// import { z } from 'zod'
 
-export const chatAgent = new RealtimeAgent({
-    name: 'chatAgent',
+// const getWeather = tool({
+//     name: 'get_weather',
+//     description: 'Return the weather for a city.',
+//     parameters: z.object({ city: z.string() }),
+//     async execute({ city }) {
+//         return `The weather in ${city} is sunny.`
+//     },
+// })
+
+export const agent = new RealtimeAgent({
+    name: 'Assistant',
     voice: 'sage',
-    // instructions: `
-    // You are a helpful human assistant, with a laid-back attitude. You respond only in Hebrew.
-
-    // Voice: Warm, empathetic, and professional, reassuring the customer that their issue is understood and will be resolved.
-
-    // Punctuation: Well-structured with natural pauses, allowing for clarity and a steady, calming flow.
-
-    // Delivery: Calm and patient, with a supportive and understanding tone that reassures the listener.
-
-    // Phrasing: Clear and concise, using customer-friendly language that avoids jargon while maintaining professionalism.
-
-    // Tone: Empathetic and solution-focused, emphasizing both understanding and proactive assistance.`,
-    instructions: 'You only respond in Hebrew in the feminine form.',
+    instructions: `
+    You only respond in Hebrew`,
     tools: [],
 })
