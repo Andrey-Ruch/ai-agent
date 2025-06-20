@@ -3,10 +3,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 // UI components
+import Transcript from '@/components/Transcript'
 import ToolBar from '@/components/ToolBar'
 
 // Types
-import { SessionStatus } from './type'
+import { SessionStatus } from './types'
 
 // Utilities
 import { RealtimeClient } from '@/app/agentConfigs/realtimeClient'
@@ -35,6 +36,8 @@ export default function App() {
 
     const sdkClientRef = useRef<RealtimeClient | null>(null)
     const [sessionStatus, setSessionStatus] = useState<SessionStatus>('DISCONNECTED')
+
+    const [userText, setUserText] = useState<string>('')
     const [isPTTActive, setIsPTTActive] = useState<boolean>(false) // false
     const [isPTTUserSpeaking, setIsPTTUserSpeaking] = useState<boolean>(false)
     const [isAudioPlaybackEnabled, setIsAudioPlaybackEnabled] = useState<boolean>(() => {
@@ -198,6 +201,24 @@ export default function App() {
         }
     }
 
+    const handleSendTextMessage = () => {
+        if (!userText.trim()) return
+        cancelAssistantSpeech()
+
+        if (!sdkClientRef.current) {
+            console.error('SDK client not available')
+            return
+        }
+
+        try {
+            sdkClientRef.current.sendUserText(userText.trim())
+        } catch (err) {
+            console.error('Failed to send via SDK', err)
+        }
+
+        setUserText('')
+    }
+
     const handleTalkButtonDown = () => {
         if (sessionStatus !== 'CONNECTED' || sdkClientRef.current == null) return
         cancelAssistantSpeech()
@@ -297,16 +318,27 @@ export default function App() {
     }, [sessionStatus])
 
     return (
-        <ToolBar
-            sessionStatus={sessionStatus}
-            onToggleConnection={onToggleConnection}
-            isPTTActive={isPTTActive}
-            setIsPTTActive={setIsPTTActive}
-            isPTTUserSpeaking={isPTTUserSpeaking}
-            handleTalkButtonDown={handleTalkButtonDown}
-            handleTalkButtonUp={handleTalkButtonUp}
-            isAudioPlaybackEnabled={isAudioPlaybackEnabled}
-            setIsAudioPlaybackEnabled={setIsAudioPlaybackEnabled}
-        />
+        <main className="flex flex-col h-screen">
+            <div className="flex flex-1 gap-2 px-2 overflow-hidden relative">
+                <Transcript
+                    userText={userText}
+                    setUserText={setUserText}
+                    onSendMessage={handleSendTextMessage}
+                    downloadRecording={downloadRecording}
+                    canSend={sessionStatus === 'CONNECTED' && sdkClientRef.current != null}
+                />
+            </div>
+            <ToolBar
+                sessionStatus={sessionStatus}
+                onToggleConnection={onToggleConnection}
+                isPTTActive={isPTTActive}
+                setIsPTTActive={setIsPTTActive}
+                isPTTUserSpeaking={isPTTUserSpeaking}
+                handleTalkButtonDown={handleTalkButtonDown}
+                handleTalkButtonUp={handleTalkButtonUp}
+                isAudioPlaybackEnabled={isAudioPlaybackEnabled}
+                setIsAudioPlaybackEnabled={setIsAudioPlaybackEnabled}
+            />
+        </main>
     )
 }

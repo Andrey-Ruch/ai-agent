@@ -1,16 +1,8 @@
 // Types
-import { SessionStatus } from '@/app/type'
+import { SessionStatus } from '@/app/types'
 
 // UI components
-import {
-    Card,
-    CardAction,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from '@/components/ui/card'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
@@ -88,20 +80,11 @@ export default function ToolBar({
     }
 
     return (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center">
             <Card className="w-full max-w-sm">
                 <CardHeader>
                     <CardTitle>Voice Agent</CardTitle>
                     <CardDescription>Demo</CardDescription>
-                    <CardAction>
-                        {/* <Button
-                            size="icon"
-                            onClick={onToggleConnection}
-                            className={getConnectionButtonClasses()}
-                            disabled={isConnecting}>
-                            {getConnectionButtonIcon()}
-                        </Button> */}
-                    </CardAction>
                 </CardHeader>
                 <CardContent className="flex justify-center items-center space-x-4">
                     {/* <Checkbox
@@ -139,11 +122,6 @@ export default function ToolBar({
                         {/* {getConnectionButtonLabel()} */}
                     </Button>
                 </CardContent>
-                {/* <CardFooter>
-                    <p>
-                        <strong>isPTTActive:</strong> {isPTTActive.toString()}
-                    </p>
-                </CardFooter> */}
             </Card>
         </div>
     )
