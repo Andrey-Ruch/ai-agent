@@ -659,7 +659,7 @@ export default function App() {
     }, [sessionStatus])
 
     return (
-        <div className="flex flex-row justify-center h-screen p-2">
+        <div className="flex flex-row justify-center h-full p-2">
             <div className="flex flex-1 gap-2 px-2 overflow-hidden relative max-w-3xl">
                 <Transcript
                     userText={userText}

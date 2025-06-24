@@ -1,30 +1,25 @@
-"use client"
+'use client'
 
-import * as React from "react"
+import * as React from 'react'
 import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react"
+    Feather ,
+    LibraryBig,
+    BookOpenText,
+} from 'lucide-react'
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
+import { NavProjects } from '@/components/nav-projects'
+import { NavMain } from '@/components/nav-main'
+import { NavUser } from '@/components/nav-user'
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarRail,
-} from "@/components/ui/sidebar"
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarHeader,
+    SidebarRail,
+    SidebarMenu,
+    SidebarMenuItem,
+    SidebarMenuButton,
+} from '@/components/ui/sidebar'
 
 // This is sample data.
 const data = {
@@ -33,28 +28,18 @@ const data = {
         email: 'andrey@example.com',
         avatar: 'https://github.com/shadcn.png',
     },
-    teams: [
-        {
-            name: 'Acme Inc',
-            logo: GalleryVerticalEnd,
-            plan: 'Enterprise',
-        },
-        {
-            name: 'Acme Corp.',
-            logo: AudioWaveform,
-            plan: 'Startup',
-        },
-        {
-            name: 'Evil Corp.',
-            logo: Command,
-            plan: 'Free',
-        },
-    ],
     navMain: [
         {
-            title: 'Playground',
+            name: 'Books',
             url: '#',
-            icon: SquareTerminal,
+            icon: LibraryBig,
+        },
+    ],
+    projects: [
+        {
+            title: 'Book Demo #1',
+            url: '#',
+            icon: BookOpenText,
             isActive: true,
             items: [
                 {
@@ -66,15 +51,15 @@ const data = {
                     url: '#',
                 },
                 {
-                    title: 'Settings',
+                    title: 'The End',
                     url: '#',
                 },
             ],
         },
         {
-            title: 'Models',
+            title: 'Book Demo #2',
             url: '#',
-            icon: Bot,
+            icon: BookOpenText,
             items: [
                 {
                     title: 'Genesis',
@@ -90,86 +75,37 @@ const data = {
                 },
             ],
         },
-        {
-            title: 'Documentation',
-            url: '#',
-            icon: BookOpen,
-            items: [
-                {
-                    title: 'Introduction',
-                    url: '#',
-                },
-                {
-                    title: 'Get Started',
-                    url: '#',
-                },
-                {
-                    title: 'Tutorials',
-                    url: '#',
-                },
-                {
-                    title: 'Changelog',
-                    url: '#',
-                },
-            ],
-        },
-        {
-            title: 'Settings',
-            url: '#',
-            icon: Settings2,
-            items: [
-                {
-                    title: 'General',
-                    url: '#',
-                },
-                {
-                    title: 'Team',
-                    url: '#',
-                },
-                {
-                    title: 'Billing',
-                    url: '#',
-                },
-                {
-                    title: 'Limits',
-                    url: '#',
-                },
-            ],
-        },
-    ],
-    projects: [
-        {
-            name: 'Design Engineering',
-            url: '#',
-            icon: Frame,
-        },
-        {
-            name: 'Sales & Marketing',
-            url: '#',
-            icon: PieChart,
-        },
-        {
-            name: 'Travel',
-            url: '#',
-            icon: Map,
-        },
     ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
-      </SidebarHeader>
-      <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
-      </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
-      <SidebarRail />
-    </Sidebar>
-  )
+    return (
+        <Sidebar collapsible="icon" {...props}>
+            <SidebarHeader>
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton size="lg" asChild>
+                            <a href="#">
+                                <div className="bg-main text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+                                    <Feather  className="size-5" />
+                                </div>
+                                <div className="flex flex-col gap-0.5 leading-none">
+                                    <span className="font-bold text-base">Agatha</span>
+                                    {/* <span className="">v1.0.0</span> */}
+                                </div>
+                            </a>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                </SidebarMenu>
+            </SidebarHeader>
+            <SidebarContent>
+                <NavMain items={data.navMain} />
+                <NavProjects projects={data.projects} />
+            </SidebarContent>
+            <SidebarFooter>
+                <NavUser user={data.user} />
+            </SidebarFooter>
+            <SidebarRail />
+        </Sidebar>
+    )
 }
