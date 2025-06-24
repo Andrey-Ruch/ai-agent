@@ -80,39 +80,9 @@ export default function ToolBar({
     }
 
     return (
-        <div className="flex justify-center items-center">
-            <Card className="w-full max-w-sm">
-                <CardHeader>
-                    <CardTitle>Voice Agent</CardTitle>
-                    <CardDescription>Demo</CardDescription>
-                </CardHeader>
-                <CardContent className="flex justify-center items-center space-x-4">
-                    {/* <Checkbox
-                        id="push-to-talk"
-                        checked={isPTTActive}
-                        onCheckedChange={(checked) => {
-                            setIsPTTActive(checked as boolean)
-                            console.log('checked =', checked)
-                        }}
-                        disabled={!isConnected}
-                    />
-                    <Label htmlFor="push-to-talk">Push to talk</Label> */}
-                    {/* <Button
-                        onMouseDown={handleTalkButtonDown}
-                        onMouseUp={handleTalkButtonUp}
-                        onTouchStart={handleTalkButtonDown}
-                        onTouchEnd={handleTalkButtonUp}
-                        disabled={!isConnected}>
-                        Talk
-                    </Button> */}
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        disabled={!isConnected}
-                        className={getMicrophoneButtonClasses()}
-                        onClick={handleMicrophoneButtonClick}>
-                        {getMicrophoneButtonIcon()}
-                    </Button>
+        <div className="flex justify-center items-end">
+            <Card className="w-full max-w-sm py-3">
+                <CardContent className="flex flex-col gap-2 justify-center items-center px-2">
                     <Button
                         size="icon"
                         onClick={onToggleConnection}
@@ -120,6 +90,14 @@ export default function ToolBar({
                         disabled={isConnecting}>
                         {getConnectionButtonIcon()}
                         {/* {getConnectionButtonLabel()} */}
+                    </Button>
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        disabled={!isConnected}
+                        className={getMicrophoneButtonClasses()}
+                        onClick={handleMicrophoneButtonClick}>
+                        {getMicrophoneButtonIcon()}
                     </Button>
                 </CardContent>
             </Card>

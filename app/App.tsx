@@ -83,11 +83,11 @@ export default function App() {
         }
     }
 
-    useEffect(() => {
-        if (sessionStatus === 'DISCONNECTED') {
-            connectToRealtime()
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (sessionStatus === 'DISCONNECTED') {
+    //         connectToRealtime()
+    //     }
+    // }, [])
 
     useEffect(() => {
         if (sessionStatus === 'CONNECTED') {
@@ -659,8 +659,8 @@ export default function App() {
     }, [sessionStatus])
 
     return (
-        <main className="flex flex-col h-screen">
-            <div className="flex flex-1 gap-2 px-2 overflow-hidden relative">
+        <div className="flex flex-row justify-center h-screen p-2">
+            <div className="flex flex-1 gap-2 px-2 overflow-hidden relative max-w-3xl">
                 <Transcript
                     userText={userText}
                     setUserText={setUserText}
@@ -680,6 +680,6 @@ export default function App() {
                 isAudioPlaybackEnabled={isAudioPlaybackEnabled}
                 setIsAudioPlaybackEnabled={setIsAudioPlaybackEnabled}
             />
-        </main>
+        </div>
     )
 }
