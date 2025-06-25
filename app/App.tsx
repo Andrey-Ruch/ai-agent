@@ -659,7 +659,8 @@ export default function App() {
     }, [sessionStatus])
 
     return (
-        <div className="flex flex-row justify-center h-full p-2">
+        // h-screen
+        <div className="flex flex-row justify-center p-2 h-[calc(100vh-4.5rem)] relative">
             <div className="flex flex-1 gap-2 px-2 overflow-hidden relative max-w-3xl">
                 <Transcript
                     userText={userText}
@@ -669,17 +670,19 @@ export default function App() {
                     canSend={sessionStatus === 'CONNECTED' && sdkClientRef.current != null}
                 />
             </div>
-            <ToolBar
-                sessionStatus={sessionStatus}
-                onToggleConnection={onToggleConnection}
-                isPTTActive={isPTTActive}
-                setIsPTTActive={setIsPTTActive}
-                isPTTUserSpeaking={isPTTUserSpeaking}
-                handleTalkButtonDown={handleTalkButtonDown}
-                handleTalkButtonUp={handleTalkButtonUp}
-                isAudioPlaybackEnabled={isAudioPlaybackEnabled}
-                setIsAudioPlaybackEnabled={setIsAudioPlaybackEnabled}
-            />
+            <div className="flex justify-center items-end">
+                <ToolBar
+                    sessionStatus={sessionStatus}
+                    onToggleConnection={onToggleConnection}
+                    isPTTActive={isPTTActive}
+                    setIsPTTActive={setIsPTTActive}
+                    isPTTUserSpeaking={isPTTUserSpeaking}
+                    handleTalkButtonDown={handleTalkButtonDown}
+                    handleTalkButtonUp={handleTalkButtonUp}
+                    isAudioPlaybackEnabled={isAudioPlaybackEnabled}
+                    setIsAudioPlaybackEnabled={setIsAudioPlaybackEnabled}
+                />
+            </div>
         </div>
     )
 }

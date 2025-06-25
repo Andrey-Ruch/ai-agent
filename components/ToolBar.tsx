@@ -80,27 +80,25 @@ export default function ToolBar({
     }
 
     return (
-        <div className="flex justify-center items-end">
-            <Card className="w-full max-w-sm py-3">
-                <CardContent className="flex flex-col gap-2 justify-center items-center px-2">
-                    <Button
-                        size="icon"
-                        onClick={onToggleConnection}
-                        className={getConnectionButtonClasses()}
-                        disabled={isConnecting}>
-                        {getConnectionButtonIcon()}
-                        {/* {getConnectionButtonLabel()} */}
-                    </Button>
-                    <Button
-                        variant="outline"
-                        size="icon"
-                        disabled={!isConnected}
-                        className={getMicrophoneButtonClasses()}
-                        onClick={handleMicrophoneButtonClick}>
-                        {getMicrophoneButtonIcon()}
-                    </Button>
-                </CardContent>
-            </Card>
-        </div>
+        <Card className="w-full max-w-sm py-3">
+            <CardContent className="flex flex-col gap-2 justify-center items-center px-2">
+                <Button
+                    size="icon"
+                    onClick={onToggleConnection}
+                    className={getConnectionButtonClasses()}
+                    disabled={isConnecting}>
+                    {getConnectionButtonIcon()}
+                    {/* {getConnectionButtonLabel()} */}
+                </Button>
+                <Button
+                    variant="outline"
+                    size="icon"
+                    disabled={!isConnected}
+                    className={getMicrophoneButtonClasses()}
+                    onClick={handleMicrophoneButtonClick}>
+                    {getMicrophoneButtonIcon()}
+                </Button>
+            </CardContent>
+        </Card>
     )
 }

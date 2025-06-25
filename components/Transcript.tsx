@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { TranscriptItem } from '@/app/types'
-import Image from 'next/image'
 import { useTranscript } from '@/app/contexts/TranscriptContext'
 import { Button } from '@/components/ui/button'
 import { ArrowUp } from 'lucide-react'
@@ -79,7 +78,8 @@ export default function Transcript({
                 </div> */}
 
                 {/* Transcript Content */}
-                <div ref={transcriptRef} className="overflow-auto p-4 flex flex-col gap-y-4 h-full">
+                {/* overflow-auto */}
+                <div ref={transcriptRef} className="overflow-auto p-4 flex flex-col gap-y-4">
                     {[...transcriptItems]
                         .sort((a, b) => a.createdAtMs - b.createdAtMs)
                         .map((item) => {
@@ -190,7 +190,7 @@ export default function Transcript({
                         })}
                 </div>
             </div>
-
+            {/* p-4 flex items-center gap-x-2 flex-shrink-0 border-t border-gray-200 */}
             <div className="pt-1 px-2 pb-3 flex items-end gap-x-2 flex-shrink-0 rounded-xl bg-white border shadow-sm">
                 <textarea
                     ref={inputRef}
