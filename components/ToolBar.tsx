@@ -2,11 +2,10 @@
 import { SessionStatus } from '@/app/types'
 
 // UI components
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Label } from '@/components/ui/label'
-import { AudioLines, X, Mic, MicOff, LoaderCircle } from 'lucide-react'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { Play, X, Mic, MicOff, LoaderCircle } from 'lucide-react'
 
 interface ToolBarProps {
     sessionStatus: SessionStatus
@@ -49,15 +48,21 @@ export default function ToolBar({
     function getConnectionButtonIcon() {
         if (isConnected) return <X />
         if (isConnecting) return <LoaderCircle className="animate-spin" />
-        return <AudioLines />
+        return <Play />
+    }
+
+    function getConnectionButtonTooltip() {
+        if (isConnected) return 'End Session'
+        if (isConnecting) return 'Connecting...'
+        return 'Start Session'
     }
 
     function getConnectionButtonClasses() {
-        const baseClasses = 'rounded-full'
+        const baseClasses = 'rounded-full text-main'
         const cursorClass = isConnecting ? 'cursor-not-allowed' : 'cursor-pointer'
-        const colorClass = isConnected ? '' : 'bg-green-600 hover:bg-green-700'
+        // const colorClass = isConnected ? '' : 'bg-green-600 hover:bg-green-700'
 
-        return `${cursorClass} ${baseClasses} ${colorClass}`
+        return `${cursorClass} ${baseClasses}`
     }
 
     function getMicrophoneButtonIcon() {
@@ -82,22 +87,32 @@ export default function ToolBar({
     return (
         <Card className="w-full max-w-sm py-3">
             <CardContent className="flex flex-col gap-2 justify-center items-center px-2">
-                <Button
-                    size="icon"
-                    onClick={onToggleConnection}
-                    className={getConnectionButtonClasses()}
-                    disabled={isConnecting}>
-                    {getConnectionButtonIcon()}
-                    {/* {getConnectionButtonLabel()} */}
-                </Button>
-                <Button
-                    variant="outline"
-                    size="icon"
-                    disabled={!isConnected}
-                    className={getMicrophoneButtonClasses()}
-                    onClick={handleMicrophoneButtonClick}>
-                    {getMicrophoneButtonIcon()}
-                </Button>
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={onToggleConnection}
+                            className={getConnectionButtonClasses()}
+                            disabled={isConnecting}>
+                            {getConnectionButtonIcon()}
+                            {/* {getConnectionButtonLabel()} */}
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        <p>{getConnectionButtonTooltip()}</p>
+                    </TooltipContent>
+                </Tooltip>
+                {isConnected && (
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        disabled={!isConnected}
+                        className={getMicrophoneButtonClasses()}
+                        onClick={handleMicrophoneButtonClick}>
+                        {getMicrophoneButtonIcon()}
+                    </Button>
+                )}
             </CardContent>
         </Card>
     )

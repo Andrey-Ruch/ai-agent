@@ -7,7 +7,7 @@ import Transcript from '@/components/Transcript'
 import ToolBar from '@/components/ToolBar'
 
 // Types
-import { SessionStatus, TranscriptItem } from './types'
+import { SessionStatus, TranscriptItem } from '../app/types'
 import type { RealtimeAgent } from '@openai/agents/realtime'
 
 // Context providers & hooks
@@ -659,17 +659,7 @@ export default function App() {
     }, [sessionStatus])
 
     return (
-        // h-screen
         <div className="flex flex-row justify-center p-2 h-[calc(100vh-4.5rem)] relative">
-            <div className="flex flex-1 gap-2 px-2 overflow-hidden relative max-w-3xl">
-                <Transcript
-                    userText={userText}
-                    setUserText={setUserText}
-                    onSendMessage={handleSendTextMessage}
-                    downloadRecording={downloadRecording}
-                    canSend={sessionStatus === 'CONNECTED' && sdkClientRef.current != null}
-                />
-            </div>
             <div className="flex justify-center items-end">
                 <ToolBar
                     sessionStatus={sessionStatus}
@@ -681,6 +671,19 @@ export default function App() {
                     handleTalkButtonUp={handleTalkButtonUp}
                     isAudioPlaybackEnabled={isAudioPlaybackEnabled}
                     setIsAudioPlaybackEnabled={setIsAudioPlaybackEnabled}
+                />
+            </div>
+
+            {/* TODO: The scroll bar needs to be improved.
+                      That will appear on the right edge of the screen.
+                      Currently it appears inside the Transcript. */}
+            <div className="flex flex-1 gap-2 px-2 overflow-hidden relative max-w-3xl">
+                <Transcript
+                    userText={userText}
+                    setUserText={setUserText}
+                    onSendMessage={handleSendTextMessage}
+                    downloadRecording={downloadRecording}
+                    canSend={sessionStatus === 'CONNECTED' && sdkClientRef.current != null}
                 />
             </div>
         </div>

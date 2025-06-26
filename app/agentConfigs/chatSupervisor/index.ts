@@ -1,4 +1,5 @@
 import { tool, RealtimeAgent } from '@openai/agents-realtime'
+import { ghostwriterPrompt } from './ghostwriterPrompt'
 // import { z } from 'zod'
 
 // const getWeather = tool({
@@ -11,9 +12,8 @@ import { tool, RealtimeAgent } from '@openai/agents-realtime'
 // })
 
 export const agent = new RealtimeAgent({
-    name: 'Assistant',
-    voice: 'sage',
-    instructions: `
-    You only respond in Hebrew`,
+    name: 'Ghostwriter',
+    voice: 'shimmer',
+    instructions: ghostwriterPrompt,
     tools: [],
 })

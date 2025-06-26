@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
     title: 'AI Agent',
     description:
-        'Learn how to build voice agents that can understand audio and respond back in natural language',
+        'Build voice agents that can understand audio and respond back in natural language',
 }
 
 export default function RootLayout({

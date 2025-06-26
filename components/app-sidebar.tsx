@@ -1,11 +1,7 @@
 'use client'
 
 import * as React from 'react'
-import {
-    Feather ,
-    LibraryBig,
-    BookOpenText,
-} from 'lucide-react'
+import { Feather, LibraryBig, BookOpenText } from 'lucide-react'
 
 import { NavProjects } from '@/components/nav-projects'
 import { NavMain } from '@/components/nav-main'
@@ -87,7 +83,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         <SidebarMenuButton size="lg" asChild>
                             <a href="#">
                                 <div className="bg-main text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                                    <Feather  className="size-5" />
+                                    <Feather className="size-5" />
                                 </div>
                                 <div className="flex flex-col gap-0.5 leading-none">
                                     <span className="font-bold text-base">Agatha</span>

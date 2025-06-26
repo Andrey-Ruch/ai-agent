@@ -76,9 +76,13 @@ export default function Transcript({
                         </button>
                     </div>
                 </div> */}
+                
+
+                {/* TODO: The scroll bar needs to be improved.
+                      That will appear on the right edge of the screen.
+                      Currently it appears inside the Transcript Content. */}
 
                 {/* Transcript Content */}
-                {/* overflow-auto */}
                 <div ref={transcriptRef} className="overflow-auto p-4 flex flex-col gap-y-4">
                     {[...transcriptItems]
                         .sort((a, b) => a.createdAtMs - b.createdAtMs)
@@ -123,12 +127,12 @@ export default function Transcript({
                                                 className={`${bubbleBase} rounded-xl ${
                                                     guardrailResult ? '' : 'rounded-b-xl'
                                                 }`}>
-                                                <div
+                                                {/* <div
                                                     className={`text-xs ${
                                                         isUser ? 'text-gray-500' : 'text-gray-500'
                                                     } font-mono`}>
                                                     {timestamp}
-                                                </div>
+                                                </div> */}
                                                 <div
                                                     className={`whitespace-pre-wrap ${messageStyle}`}>
                                                     <ReactMarkdown>{displayTitle}</ReactMarkdown>
@@ -190,7 +194,7 @@ export default function Transcript({
                         })}
                 </div>
             </div>
-            {/* p-4 flex items-center gap-x-2 flex-shrink-0 border-t border-gray-200 */}
+
             <div className="pt-1 px-2 pb-3 flex items-end gap-x-2 flex-shrink-0 rounded-xl bg-white border shadow-sm">
                 <textarea
                     ref={inputRef}
@@ -210,7 +214,7 @@ export default function Transcript({
                     size="icon"
                     onClick={onSendMessage}
                     disabled={!canSend || !userText.trim()}
-                    className="rounded-full">
+                    className="bg-main hover:bg-main/80 rounded-full">
                     <ArrowUp className="size-6" />
                 </Button>
             </div>

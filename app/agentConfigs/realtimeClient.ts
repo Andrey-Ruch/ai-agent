@@ -77,8 +77,6 @@ export class RealtimeClient {
             : 'webrtc'
 
         this.#session = new RealtimeSession(rootAgent, {
-            // model: 'gpt-4o-realtime-preview-2025-06-03',
-            model: 'gpt-4o-mini-realtime-preview-2024-12-17',
             transport: transportValue,
             context: this.#options.extraContext ?? {},
         })

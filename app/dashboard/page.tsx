@@ -1,5 +1,5 @@
 import { TranscriptProvider } from '@/app/contexts/TranscriptContext'
-import App from '../App'
+import App from '../../components/App'
 import { AppSidebar } from '@/components/app-sidebar'
 import {
     Breadcrumb,
@@ -17,8 +17,7 @@ export default function Page() {
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
-                {/* flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 */}
-                <header className="bg-background sticky top-0 z-50 flex w-full items-center border-b p-4 pb-2">
+                <header className="bg-background sticky top-0 z-50 flex w-full items-center p-4 pb-2">
                     <div className="flex items-center gap-2 px-4">
                         <SidebarTrigger className="-ml-1" />
                         <Separator
