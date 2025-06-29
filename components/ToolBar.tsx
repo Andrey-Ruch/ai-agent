@@ -5,7 +5,7 @@ import { SessionStatus } from '@/app/types'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
-import { Play, X, Mic, MicOff, LoaderCircle } from 'lucide-react'
+import { Play, X, Mic, MicOff, Loader2Icon } from 'lucide-react'
 
 interface ToolBarProps {
     sessionStatus: SessionStatus
@@ -47,14 +47,8 @@ export default function ToolBar({
 
     function getConnectionButtonIcon() {
         if (isConnected) return <X />
-        if (isConnecting) return <LoaderCircle className="animate-spin" />
+        if (isConnecting) return <Loader2Icon className="animate-spin" />
         return <Play />
-    }
-
-    function getConnectionButtonTooltip() {
-        if (isConnected) return 'End Session'
-        if (isConnecting) return 'Connecting...'
-        return 'Start Session'
     }
 
     function getConnectionButtonClasses() {
@@ -63,6 +57,12 @@ export default function ToolBar({
         // const colorClass = isConnected ? '' : 'bg-green-600 hover:bg-green-700'
 
         return `${cursorClass} ${baseClasses}`
+    }
+
+    function getConnectionButtonTooltip() {
+        if (isConnected) return 'End Session'
+        if (isConnecting) return 'Connecting...'
+        return 'Start Session'
     }
 
     function getMicrophoneButtonIcon() {
