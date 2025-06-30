@@ -8,6 +8,17 @@ export type ModerationCategory = (typeof MODERATION_CATEGORIES)[number]
 
 export type SessionStatus = 'DISCONNECTED' | 'CONNECTING' | 'CONNECTED'
 
+export interface ConversationState {
+    id: string
+    description: string
+    instructions: string[]
+    examples: string[]
+    transitions: {
+        next_step: string
+        condition: string
+    }[]
+}
+
 export interface GuardrailResultType {
     status: 'IN_PROGRESS' | 'DONE'
     testText?: string

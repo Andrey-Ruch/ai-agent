@@ -13,7 +13,7 @@ import { ghostwriterPrompt } from './ghostwriterPrompt'
 
 export const agent = new RealtimeAgent({
     name: 'Ghostwriter',
-    voice: 'shimmer',
+    voice: 'alloy',
     instructions: ghostwriterPrompt,
     tools: [],
 })
