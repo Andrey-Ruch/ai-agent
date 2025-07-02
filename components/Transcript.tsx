@@ -58,26 +58,6 @@ export default function Transcript({
     return (
         <div className="flex flex-col flex-1 min-h-0 rounded-xl">
             <div className="flex flex-col flex-1 min-h-0">
-                {/* Transcript Header */}
-                {/* <div className="flex items-center justify-between px-6 py-3 sticky top-0 z-10 text-base border-b bg-white rounded-t-xl">
-                    <span className="font-semibold">Transcript</span>
-                    <div className="flex gap-x-2">
-                        <button
-                            onClick={handleCopyTranscript}
-                            className="w-24 text-sm px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-300 flex items-center justify-center gap-x-1">
-                            <ClipboardCopyIcon />
-                            {justCopied ? 'Copied!' : 'Copy'}
-                        </button>
-                        <button
-                            onClick={downloadRecording}
-                            className="w-40 text-sm px-3 py-1 rounded-md bg-gray-200 hover:bg-gray-300 flex items-center justify-center gap-x-1">
-                            <DownloadIcon />
-                            <span>Download Audio</span>
-                        </button>
-                    </div>
-                </div> */}
-                
-
                 {/* TODO: The scroll bar needs to be improved.
                       That will appear on the right edge of the screen.
                       Currently it appears inside the Transcript Content. */}
@@ -108,6 +88,7 @@ export default function Transcript({
                                 const containerClasses = `flex justify-end flex-col ${
                                     isUser ? 'items-end' : 'items-start'
                                 }`
+                                const isTranscribing = title === 'Transcribing…'
                                 const bubbleBase = `max-w-lg p-3 ${
                                     isUser
                                         ? 'bg-[#D5B99C]/40 text-slate-800'
@@ -115,7 +96,9 @@ export default function Transcript({
                                 }`
                                 const isBracketedMessage =
                                     title.startsWith('[') && title.endsWith(']')
-                                const messageStyle = isBracketedMessage
+                                const messageStyle = isTranscribing
+                                    ? 'italic animate-pulse'
+                                    : isBracketedMessage
                                     ? 'italic text-gray-400'
                                     : ''
                                 const displayTitle = isBracketedMessage ? title.slice(1, -1) : title
@@ -127,24 +110,11 @@ export default function Transcript({
                                                 className={`${bubbleBase} rounded-xl ${
                                                     guardrailResult ? '' : 'rounded-b-xl'
                                                 }`}>
-                                                {/* <div
-                                                    className={`text-xs ${
-                                                        isUser ? 'text-gray-500' : 'text-gray-500'
-                                                    } font-mono`}>
-                                                    {timestamp}
-                                                </div> */}
                                                 <div
                                                     className={`whitespace-pre-wrap ${messageStyle}`}>
                                                     <ReactMarkdown>{displayTitle}</ReactMarkdown>
                                                 </div>
                                             </div>
-                                            {/* {guardrailResult && (
-                                                <div className="bg-gray-200 px-3 py-2 rounded-b-xl">
-                                                    <GuardrailChip
-                                                        guardrailResult={guardrailResult}
-                                                    />
-                                                </div>
-                                            )} */}
                                         </div>
                                     </div>
                                 )
