@@ -659,7 +659,7 @@ export default function App() {
     }, [sessionStatus])
 
     return (
-        <div className="flex flex-row justify-center p-2 h-[calc(100vh-4.5rem)] relative">
+        <div className="flex flex-row justify-center px-2 h-[calc(100vh-4.5rem)] relative">
             <div className="flex justify-center items-end">
                 <ToolBar
                     sessionStatus={sessionStatus}
@@ -676,8 +676,8 @@ export default function App() {
 
             {/* TODO: The scroll bar needs to be improved.
                       That will appear on the right edge of the screen.
-                      Currently it appears inside the Transcript. */}
-            <div className="flex flex-1 gap-2 px-2 overflow-hidden relative max-w-3xl">
+                      Currently it appears inside the Transcript.   */}
+            <div className="flex flex-1 gap-2 pl-2 overflow-hidden relative max-w-3xl">
                 <Transcript
                     userText={userText}
                     setUserText={setUserText}

@@ -129,18 +129,35 @@
         @apply bg-background text-foreground;
     }
 
-    /* Hide scrollbars completely */
-    ::-webkit-scrollbar {
-        display: none;
+    /* Custom thin scrollbars */
+    * {
+        /* Modern browsers (Firefox) */
+        scrollbar-width: thin;
+        scrollbar-color: #d1d5db transparent;
     }
 
-    /* For Firefox */
-    * {
-        scrollbar-width: none;
+    /* Webkit browsers (Chrome, Safari, Edge) */
+    *::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
     }
 
-    /* For Internet Explorer and Edge */
-    * {
-        -ms-overflow-style: none;
+    *::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background-color: #d1d5db;
+        border-radius: 3px;
+        opacity: 0.5;
+    }
+
+    *::-webkit-scrollbar-thumb:hover {
+        background-color: #9ca3af;
+        opacity: 0.8;
+    }
+
+    *::-webkit-scrollbar-corner {
+        background: transparent;
     }
 }

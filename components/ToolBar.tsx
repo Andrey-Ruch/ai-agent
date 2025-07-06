@@ -90,7 +90,7 @@ export default function ToolBar({
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Button
-                            variant="outline"
+                            variant="secondary"
                             size="icon"
                             onClick={onToggleConnection}
                             className={getConnectionButtonClasses()}
@@ -105,7 +105,7 @@ export default function ToolBar({
                 </Tooltip>
                 {isConnected && (
                     <Button
-                        variant="outline"
+                        variant="secondary"
                         size="icon"
                         disabled={!isConnected}
                         className={getMicrophoneButtonClasses()}

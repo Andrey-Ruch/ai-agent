@@ -63,7 +63,7 @@ export default function Transcript({
                       Currently it appears inside the Transcript Content. */}
 
                 {/* Transcript Content */}
-                <div ref={transcriptRef} className="overflow-auto p-4 flex flex-col gap-y-4">
+                <div ref={transcriptRef} className="overflow-auto p-4 flex flex-col gap-y-4 h-full">
                     {[...transcriptItems]
                         .sort((a, b) => a.createdAtMs - b.createdAtMs)
                         .map((item) => {
@@ -165,7 +165,7 @@ export default function Transcript({
                 </div>
             </div>
 
-            <div className="pt-1 px-2 pb-3 flex items-end gap-x-2 flex-shrink-0 rounded-xl bg-white border shadow-sm">
+            <div className="pt-1 px-2 pb-3 flex flex-col flex-shrink-0 rounded-xl bg-white border shadow-sm">
                 <textarea
                     ref={inputRef}
                     value={userText}
@@ -176,15 +176,15 @@ export default function Transcript({
                             onSendMessage()
                         }
                     }}
-                    className="flex-1 px-4 py-2 focus:outline-none resize-none rounded-md"
+                    className="flex-1 px-2 py-2 focus:outline-none resize-none rounded-md"
                     placeholder="Type a message..."
-                    rows={3}
+                    rows={2}
                 />
                 <Button
                     size="icon"
                     onClick={onSendMessage}
                     disabled={!canSend || !userText.trim()}
-                    className="bg-main hover:bg-main/80 rounded-full">
+                    className="bg-main hover:bg-main/80 rounded-full self-end">
                     <ArrowUp className="size-6" />
                 </Button>
             </div>
