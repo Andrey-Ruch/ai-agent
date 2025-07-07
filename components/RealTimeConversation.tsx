@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from 'react'
 // UI components
 import Transcript from '@/components/Transcript'
 import ToolBar from '@/components/ToolBar'
+import Events from '@/components/Events'
 
 // Types
 import { SessionStatus, TranscriptItem } from '../app/types'
@@ -16,9 +17,9 @@ import useAudioDownload from '@/hooks/useAudioDownload'
 
 // Utilities
 import { RealtimeClient } from '@/app/agentConfigs/realtimeClient'
-import { agent } from '@/app/agentConfigs/chatSupervisor'
+import { agent } from '@/app/agentConfigs/ghostwriter'
 
-export default function App() {
+export default function RealTimeConversation() {
     const {
         transcriptItems,
         addTranscriptMessage,
@@ -685,6 +686,8 @@ export default function App() {
                     downloadRecording={downloadRecording}
                     canSend={sessionStatus === 'CONNECTED' && sdkClientRef.current != null}
                 />
+
+                <Events isExpanded={true} />
             </div>
         </div>
     )

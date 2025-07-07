@@ -6,6 +6,9 @@ export const MODERATION_CATEGORIES = ['OFFENSIVE', 'OFF_BRAND', 'VIOLENCE', 'NON
 // Derive the union type for ModerationCategory from the array
 export type ModerationCategory = (typeof MODERATION_CATEGORIES)[number]
 
+// Create a Zod enum based on the same array
+export const ModerationCategoryZod = z.enum([...MODERATION_CATEGORIES])
+
 export type SessionStatus = 'DISCONNECTED' | 'CONNECTING' | 'CONNECTED'
 
 export interface ConversationState {
@@ -39,3 +42,21 @@ export interface TranscriptItem {
     isHidden: boolean
     guardrailResult?: GuardrailResultType
 }
+
+export interface LoggedEvent {
+    id: number
+    direction: 'client' | 'server'
+    expanded: boolean
+    timestamp: string
+    eventName: string
+    eventData: Record<string, any> // can have arbitrary objects logged
+}
+
+// Update the GuardrailOutputZod schema to use the shared ModerationCategoryZod
+export const GuardrailOutputZod = z.object({
+    moderationRationale: z.string(),
+    moderationCategory: ModerationCategoryZod,
+    testText: z.string().optional(),
+})
+
+export type GuardrailOutput = z.infer<typeof GuardrailOutputZod>

@@ -1,14 +1,9 @@
 import { TranscriptProvider } from '@/app/contexts/TranscriptContext'
-import App from '../../components/App'
+import { EventProvider } from '@/app/contexts/EventContext'
+import RealTimeConversation from '@/components/RealTimeConversation'
+import RealTimeConversation_v2 from '@/components/RealTimeConversation_v2'
+import Editor from '@/components/Editor'
 import { AppSidebar } from '@/components/app-sidebar'
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb'
 import { Separator } from '@/components/ui/separator'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
@@ -18,28 +13,28 @@ export default function Page() {
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
-                <ResizablePanelGroup direction="horizontal">
-                    <ResizablePanel minSize={30}>
-                        <header className="bg-background sticky top-0 z-50 flex w-full items-center p-4 pb-2">
-                            <div className="flex items-center gap-2 px-4">
-                                <SidebarTrigger className="-ml-1" />
-                                <Separator
-                                    orientation="vertical"
-                                    className="mr-2 data-[orientation=vertical]:h-4"
-                                />
-                            </div>
-                        </header>
-                        <div className="flex flex-1 flex-col gap-4">
-                            <TranscriptProvider>
-                                <App />
-                            </TranscriptProvider>
-                        </div>
-                    </ResizablePanel>
-                    <ResizableHandle withHandle />
-                    <ResizablePanel minSize={25}>
-                        <div className="h-full w-full bg-white">Editor</div>
-                    </ResizablePanel>
-                </ResizablePanelGroup>
+                <TranscriptProvider>
+                    <EventProvider>
+                        <ResizablePanelGroup direction="horizontal">
+                            <ResizablePanel defaultSize={50} minSize={30}>
+                                <header className="bg-background sticky top-0 z-50 flex w-full items-center p-4 pb-2">
+                                    <div className="flex items-center gap-2 px-4">
+                                        <SidebarTrigger className="-ml-1" />
+                                        <Separator
+                                            orientation="vertical"
+                                            className="mr-2 data-[orientation=vertical]:h-4"
+                                        />
+                                    </div>
+                                </header>
+                                <RealTimeConversation_v2 />
+                            </ResizablePanel>
+                            <ResizableHandle withHandle />
+                            <ResizablePanel defaultSize={50} minSize={25}>
+                                <Editor />
+                            </ResizablePanel>
+                        </ResizablePanelGroup>
+                    </EventProvider>
+                </TranscriptProvider>
             </SidebarInset>
         </SidebarProvider>
     )

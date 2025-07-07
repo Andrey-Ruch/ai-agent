@@ -33,23 +33,11 @@ export default function ToolBar({
     const isConnected = sessionStatus === 'CONNECTED'
     const isConnecting = sessionStatus === 'CONNECTING'
 
-    // console.log('\nisConnected =', isConnected)
-    // console.log('isConnecting =', isConnecting)
-    // console.log('isPTTActive =', isPTTActive)
-    // console.log('isPTTUserSpeaking =', isPTTUserSpeaking)
-    // console.log('isAudioPlaybackEnabled =', isAudioPlaybackEnabled)
-
     // function getConnectionButtonLabel() {
     //     if (isConnected) return 'Disconnect'
     //     if (isConnecting) return '' // 'Connecting...'
     //     return 'Connect'
     // }
-
-    function getConnectionButtonIcon() {
-        if (isConnected) return <X />
-        if (isConnecting) return <Loader2Icon className="animate-spin" />
-        return <Play />
-    }
 
     function getConnectionButtonClasses() {
         const baseClasses = 'rounded-full text-main'
@@ -57,6 +45,12 @@ export default function ToolBar({
         // const colorClass = isConnected ? '' : 'bg-green-600 hover:bg-green-700'
 
         return `${cursorClass} ${baseClasses}`
+    }
+
+    function getConnectionButtonIcon() {
+        if (isConnected) return <X />
+        if (isConnecting) return <Loader2Icon className="animate-spin" />
+        return <Play />
     }
 
     function getConnectionButtonTooltip() {
