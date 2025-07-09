@@ -3,6 +3,7 @@
 import { useRef } from 'react'
 import { useTranscript } from '@/app/contexts/TranscriptContext'
 import { useEvent } from '@/app/contexts/EventContext'
+import { useFunctionResults } from '@/app/contexts/FunctionResultsContext'
 
 export function useHandleSessionHistory() {
     const {
@@ -14,7 +15,8 @@ export function useHandleSessionHistory() {
     } = useTranscript()
 
     const { logServerEvent } = useEvent()
-
+    
+    const { addFunctionResult } = useFunctionResults()
     /* ----------------------- helpers ------------------------- */
 
     const extractMessageText = (content: any[] = []): string => {
@@ -86,6 +88,14 @@ export function useHandleSessionHistory() {
         addTranscriptBreadcrumb(
             `function call result: ${lastFunctionCall?.name}`,
             maybeParseJson(result)
+        )
+
+        // Capture the result in FunctionResult context
+        addFunctionResult(
+            lastFunctionCall?.name || _functionCall.name,
+            lastFunctionCall?.arguments,
+            maybeParseJson(result),
+            _agent?.name
         )
     }
 

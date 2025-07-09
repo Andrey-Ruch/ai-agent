@@ -3,7 +3,7 @@
  * implemented on top of @openai/agents/realtime RealtimeSession.
  */
 
-import { RealtimeSession, RealtimeAgent, OpenAIRealtimeWebRTC } from '@openai/agents-realtime'
+import { RealtimeSession, RealtimeAgent, OpenAIRealtimeWebRTC } from '@openai/agents/realtime'
 
 // Minimal event emitter (browser-safe, no Node polyfill)
 type Listener<Args extends any[]> = (...args: Args) => void

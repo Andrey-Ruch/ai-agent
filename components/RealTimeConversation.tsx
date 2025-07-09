@@ -17,7 +17,7 @@ import useAudioDownload from '@/hooks/useAudioDownload'
 
 // Utilities
 import { RealtimeClient } from '@/app/agentConfigs/realtimeClient'
-import { agent } from '@/app/agentConfigs/ghostwriter'
+import { ghostwriterAgent } from '@/app/agentConfigs/ghostwriter'
 
 export default function RealTimeConversation() {
     const {
@@ -123,7 +123,7 @@ export default function RealTimeConversation() {
 
             const client = new RealtimeClient({
                 getEphemeralKey: async () => EPHEMERAL_KEY,
-                initialAgent: agent,
+                initialAgent: ghostwriterAgent,
                 audioElement: sdkAudioElement,
                 extraContext: {
                     addTranscriptBreadcrumb,

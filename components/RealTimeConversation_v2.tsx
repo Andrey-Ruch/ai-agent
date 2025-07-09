@@ -29,11 +29,12 @@ import {
     chatSupervisorScenario,
     chatSupervisorCompanyName,
 } from '@/app/agentConfigs/chatSupervisor'
-import { agent } from '@/app/agentConfigs/ghostwriter'
+import { ghostwriterScenario } from '@/app/agentConfigs/ghostwriter'
 
 // Map used by connect logic for scenarios defined via the SDK.
 const sdkScenarioMap: Record<string, RealtimeAgent[]> = {
     chatSupervisor: chatSupervisorScenario,
+    ghostwriter: ghostwriterScenario,
 }
 
 export default function RealTimeConversation_v2() {
@@ -186,7 +187,7 @@ export default function RealTimeConversation_v2() {
                     getEphemeralKey: async () => EPHEMERAL_KEY,
                     initialAgents: reorderedAgents,
                     audioElement: sdkAudioElement,
-                    outputGuardrails: [guardrail],
+                    // outputGuardrails: [guardrail],
                     extraContext: {
                         addTranscriptBreadcrumb,
                     },
@@ -410,7 +411,7 @@ export default function RealTimeConversation_v2() {
                     canSend={sessionStatus === 'CONNECTED'}
                 />
 
-                <Events isExpanded={isEventsPaneExpanded} />
+                {/* <Events isExpanded={isEventsPaneExpanded} /> */}
             </div>
         </div>
     )
