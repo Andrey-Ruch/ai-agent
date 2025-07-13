@@ -1,6 +1,7 @@
 'use client'
 
 import * as React from 'react'
+import Link from 'next/link'
 import { Feather, LibraryBig, BookOpenText } from 'lucide-react'
 
 import { NavProjects } from '@/components/nav-projects'
@@ -27,7 +28,7 @@ const data = {
     navMain: [
         {
             name: 'Books',
-            url: '#',
+            url: '/dashboard/books',
             icon: LibraryBig,
         },
     ],
@@ -36,7 +37,7 @@ const data = {
             title: 'Book Demo #1',
             url: '#',
             icon: BookOpenText,
-            isActive: true,
+            // isActive: true,
             items: [
                 {
                     title: 'History',
@@ -81,15 +82,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <a href="#">
-                                <div className="bg-main text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+                            <Link href="/">
+                                <div className="text-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                                     <Feather className="size-5" />
                                 </div>
                                 <div className="flex flex-col gap-0.5 leading-none">
-                                    <span className="font-bold text-base">Agatha</span>
+                                    <span className="font-bold text-foreground text-base">
+                                        Agatha
+                                    </span>
                                     {/* <span className="">v1.0.0</span> */}
                                 </div>
-                            </a>
+                            </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>

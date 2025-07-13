@@ -13,7 +13,10 @@ const generateChapterDraft = tool({
         chapter_text: z.string(),
     }),
     execute: async ({ chapter_title, chapter_text }) => {
-        return `Title: ${chapter_title}\n\n${chapter_text}`
+        return {
+            title: chapter_title,
+            text: chapter_text,
+        }
     },
 })
 
