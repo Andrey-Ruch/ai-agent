@@ -65,11 +65,10 @@ const conversationStates: ConversationState[] = [
         description: 'Welcome the user and identify the goal of the project.',
         instructions: [
             'Greet the user warmly and express enthusiasm for helping them tell their story.',
-            'Ask what kind of story they’re hoping to tell — memoir, autobiography, biography, or something else.',
+            'Ask what kind of story they’re hoping to tell — memoir, or something else.',
         ],
         examples: [
             'Hi there — I’m really excited to work with you on your story. Can you tell me a bit about what kind of book you’re hoping to create?',
-            'Would you describe this more as a memoir, an autobiography, or maybe a biography about someone else?',
             'What made you decide to start writing this now?',
         ],
         transitions: [

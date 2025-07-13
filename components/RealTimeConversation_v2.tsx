@@ -40,7 +40,7 @@ const sdkScenarioMap: Record<string, RealtimeAgent[]> = {
 export default function RealTimeConversation_v2() {
     const searchParams = useSearchParams()!
 
-    const { addTranscriptMessage, addTranscriptBreadcrumb } = useTranscript()
+    const { addTranscriptMessage, addTranscriptBreadcrumb, addTranscriptError } = useTranscript()
     const { logClientEvent, logServerEvent } = useEvent()
 
     const [selectedAgentName, setSelectedAgentName] = useState<string>('')

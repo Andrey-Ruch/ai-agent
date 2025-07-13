@@ -13,13 +13,13 @@ export default function Editor() {
             <div className="flex flex-col gap-2 mt-4">
                 {functionResults.map((result) => (
                     <div key={result.id} className="bg-gray-100 p-2 rounded-md">
-                        <p>
+                        <p className="mb-2">
                             <span className="font-medium">Function name:</span> {result.functionName}
                         </p>
-                        <p>
+                        <p className="mb-2">
                             <span className="font-medium">Title:</span> {result.result.title}
                         </p>
-                        <p>
+                        <p className="mb-2">
                             <span className="font-medium">Text:</span> {result.result.text}
                         </p>
                     </div>

@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import { TranscriptItem } from '@/app/types'
 import { useTranscript } from '@/app/contexts/TranscriptContext'
 import { Button } from '@/components/ui/button'
-import { ArrowUp } from 'lucide-react'
+import { ArrowUp, TriangleAlert, Info, CircleX } from 'lucide-react'
 
 export interface TranscriptProps {
     userText: string
@@ -76,6 +76,7 @@ export default function Transcript({
                                 timestamp,
                                 title = '',
                                 isHidden,
+                                status,
                                 guardrailResult,
                             } = item
 
@@ -88,17 +89,18 @@ export default function Transcript({
                                 const containerClasses = `flex justify-end flex-col ${
                                     isUser ? 'items-end' : 'items-start'
                                 }`
-                                const isTranscribing = title === 'Transcribing…'
                                 const bubbleBase = `max-w-lg p-3 ${
                                     isUser
                                         ? 'bg-[#D5B99C]/40 text-slate-800'
                                         : 'bg-gray-200 text-slate-800'
                                 }`
+
+                                const isTranscribing =
+                                    title === 'Transcribing…' || title === '[Transcribing...]'
+
                                 const isBracketedMessage =
                                     title.startsWith('[') && title.endsWith(']')
-                                const messageStyle = isTranscribing
-                                    ? 'italic animate-pulse'
-                                    : isBracketedMessage
+                                const messageStyle = isBracketedMessage
                                     ? 'italic text-gray-400'
                                     : ''
                                 const displayTitle = isBracketedMessage ? title.slice(1, -1) : title
@@ -109,9 +111,11 @@ export default function Transcript({
                                             <div
                                                 className={`${bubbleBase} rounded-xl ${
                                                     guardrailResult ? '' : 'rounded-b-xl'
-                                                }`}>
+                                                } ${isTranscribing ? 'animate-pulse' : ''}`}>
                                                 <div
-                                                    className={`whitespace-pre-wrap ${messageStyle}`}>
+                                                    className={`whitespace-pre-wrap ${messageStyle} ${
+                                                        isTranscribing ? 'opacity-70' : ''
+                                                    }`}>
                                                     <ReactMarkdown>{displayTitle}</ReactMarkdown>
                                                 </div>
                                             </div>
@@ -148,6 +152,82 @@ export default function Transcript({
                                                 </pre>
                                             </div>
                                         )}
+                                    </div>
+                                )
+                            } else if (type === 'ERROR') {
+                                const errorLevel = item.errorLevel || 'error'
+
+                                // Choose icon and styling based on error level
+                                let IconComponent
+                                let containerClasses
+                                let bubbleClasses
+
+                                switch (errorLevel) {
+                                    case 'warning':
+                                        IconComponent = TriangleAlert
+                                        containerClasses = 'flex justify-center'
+                                        bubbleClasses =
+                                            'bg-yellow-50 border border-yellow-200 text-yellow-800 max-w-lg p-3 rounded-xl'
+                                        break
+                                    case 'info':
+                                        IconComponent = Info
+                                        containerClasses = 'flex justify-center'
+                                        bubbleClasses =
+                                            'bg-blue-50 border border-blue-200 text-blue-800 max-w-lg p-3 rounded-xl'
+                                        break
+                                    case 'error':
+                                    default:
+                                        IconComponent = CircleX
+                                        containerClasses = 'flex justify-center'
+                                        bubbleClasses =
+                                            'bg-red-50 border border-red-200 text-red-800 max-w-lg p-3 rounded-xl'
+                                        break
+                                }
+
+                                return (
+                                    <div key={itemId} className={containerClasses}>
+                                        <div className={bubbleClasses}>
+                                            <div className="flex items-center gap-2">
+                                                <IconComponent className="flex-shrink-0" />
+                                                <div className="flex-1">
+                                                    <div className="text-xs font-mono text-gray-500 mb-1">
+                                                        {timestamp}
+                                                    </div>
+                                                    <div className="whitespace-pre-wrap font-medium">
+                                                        {title}
+                                                    </div>
+                                                    {data && (
+                                                        <div
+                                                            className={`whitespace-pre-wrap flex items-center font-mono text-sm mt-2 ${
+                                                                data ? 'cursor-pointer' : ''
+                                                            }`}
+                                                            onClick={() =>
+                                                                data &&
+                                                                toggleTranscriptItemExpand(itemId)
+                                                            }>
+                                                            {data && (
+                                                                <span
+                                                                    className={`text-gray-400 mr-1 transform transition-transform duration-200 select-none font-mono ${
+                                                                        expanded
+                                                                            ? 'rotate-90'
+                                                                            : 'rotate-0'
+                                                                    }`}>
+                                                                    ▶
+                                                                </span>
+                                                            )}
+                                                            Technical Details
+                                                        </div>
+                                                    )}
+                                                    {expanded && data && (
+                                                        <div className="text-gray-800 text-left mt-2">
+                                                            <pre className="border-l-2 ml-1 border-gray-200 whitespace-pre-wrap break-words font-mono text-xs mb-2 mt-2 pl-2">
+                                                                {JSON.stringify(data, null, 2)}
+                                                            </pre>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 )
                             } else {
