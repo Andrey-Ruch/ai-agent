@@ -91,9 +91,10 @@ export function useRealtimeSession(callbacks: RealtimeSessionCallbacks = {}) {
                     message: errorMessage,
                 })
 
+                // TODO: Add a more descriptive error message
                 addTranscriptError(
-                    'Something went wrong with the connection. Please try again.', // TODO: add a more descriptive error message
-                    { technicalError: errorMessage },
+                    'Something went wrong with the connection. Please try again.',
+                    { error: errorMessage },
                     'error'
                 )
             })

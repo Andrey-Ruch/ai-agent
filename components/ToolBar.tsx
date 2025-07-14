@@ -2,7 +2,6 @@
 import { SessionStatus } from '@/app/types'
 
 // UI components
-import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Play, X, Mic, MicOff, Loader2Icon } from 'lucide-react'
@@ -79,8 +78,8 @@ export default function ToolBar({
     }
 
     return (
-        <Card className="w-full max-w-sm py-3">
-            <CardContent className="flex flex-col gap-2 justify-center items-center px-2">
+        <div className="w-full max-w-sm py-3 rounded-lg bg-white border shadow-sm">
+            <div className="flex flex-col gap-2 justify-center items-center px-2">
                 <Tooltip>
                     <TooltipTrigger asChild>
                         <Button
@@ -107,7 +106,7 @@ export default function ToolBar({
                         {getMicrophoneButtonIcon()}
                     </Button>
                 )}
-            </CardContent>
-        </Card>
+            </div>
+        </div>
     )
 }
