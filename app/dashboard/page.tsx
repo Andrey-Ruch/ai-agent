@@ -1,5 +1,6 @@
 import RealTimeConversation_v2 from '@/components/RealTimeConversation_v2'
 import Editor from '@/components/Editor'
+import TipTapEditor from '@/components/tiptap-editor'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
 
 export default async function Page() {
@@ -11,6 +12,7 @@ export default async function Page() {
             <ResizableHandle withHandle />
             <ResizablePanel className="p-1" defaultSize={50} minSize={25}>
                 <Editor />
+                {/* <TipTapEditor /> */}
             </ResizablePanel>
         </ResizablePanelGroup>
     )

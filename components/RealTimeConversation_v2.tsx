@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid'
 import Transcript from '@/components/Transcript'
 import ToolBar from '@/components/ToolBar'
 import Events from '@/components/Events'
+import AgentRespondingIndicator from '@/components/AgentRespondingIndicator'
 
 // Types
 import { SessionStatus, TranscriptItem } from '@/app/types'
@@ -70,7 +71,7 @@ export default function RealTimeConversation_v2() {
         }
     }, [sdkAudioElement])
 
-    const { connect, disconnect, sendUserText, sendEvent, interrupt, mute } = useRealtimeSession({
+    const { connect, disconnect, sendUserText, sendEvent, interrupt, mute, isAgentResponding } = useRealtimeSession({
         onConnectionChange: (s) => setSessionStatus(s as SessionStatus),
         onAgentHandoff: (agentName: string) => {
             handoffTriggeredRef.current = true
@@ -253,10 +254,12 @@ export default function RealTimeConversation_v2() {
 
     const handleSendTextMessage = () => {
         if (!userText.trim()) return
+        // This will reset isAgentResponding to false
         interrupt()
 
         try {
             sendUserText(userText.trim())
+            // Note: isAgentResponding will be set to true automatically when response.created event fires
         } catch (err) {
             console.error('Failed to send via SDK', err)
         }
@@ -410,6 +413,7 @@ export default function RealTimeConversation_v2() {
                     onSendMessage={handleSendTextMessage}
                     downloadRecording={downloadRecording}
                     canSend={sessionStatus === 'CONNECTED'}
+                    isAgentResponding={isAgentResponding}
                 />
 
                 {/* <Events isExpanded={isEventsPaneExpanded} /> */}

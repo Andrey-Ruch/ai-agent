@@ -23,6 +23,7 @@ export interface ConnectOptions {
 export function useRealtimeSession(callbacks: RealtimeSessionCallbacks = {}) {
     const sessionRef = useRef<RealtimeSession | null>(null)
     const [status, setStatus] = useState<SessionStatus>('DISCONNECTED')
+    const [isAgentResponding, setIsAgentResponding] = useState(false)
     const { logClientEvent } = useEvent()
     const { addTranscriptError } = useTranscript()
 
@@ -52,6 +53,20 @@ export function useRealtimeSession(callbacks: RealtimeSessionCallbacks = {}) {
             }
             case 'response.audio_transcript.delta': {
                 historyHandlers.handleTranscriptionDelta(event)
+                break
+            }
+            case 'response.created': {
+                setIsAgentResponding(true)
+                break
+            }
+            case 'response.done': {
+                setIsAgentResponding(false)
+                break
+            }
+            case 'response.text.delta':
+            case 'response.audio_transcript.delta': {
+                // If we get a response delta, we know the agent is responding
+                setIsAgentResponding(true)
                 break
             }
             default: {
@@ -91,6 +106,7 @@ export function useRealtimeSession(callbacks: RealtimeSessionCallbacks = {}) {
                     message: errorMessage,
                 })
 
+                // TODO: Consider different functionality from TranscriptContext for displaying error messages
                 // TODO: Add a more descriptive error message
                 addTranscriptError(
                     'Something went wrong with the connection. Please try again.',
@@ -162,6 +178,7 @@ export function useRealtimeSession(callbacks: RealtimeSessionCallbacks = {}) {
     const disconnect = useCallback(() => {
         sessionRef.current?.close()
         sessionRef.current = null
+        setIsAgentResponding(false) // Reset response state on disconnect
         updateStatus('DISCONNECTED')
     }, [updateStatus])
 
@@ -173,6 +190,7 @@ export function useRealtimeSession(callbacks: RealtimeSessionCallbacks = {}) {
 
     const interrupt = useCallback(() => {
         sessionRef.current?.interrupt()
+        setIsAgentResponding(false) // Reset response state on interrupt
     }, [])
 
     const sendUserText = useCallback((text: string) => {
@@ -205,6 +223,7 @@ export function useRealtimeSession(callbacks: RealtimeSessionCallbacks = {}) {
 
     return {
         status,
+        isAgentResponding,
         connect,
         disconnect,
         sendUserText,

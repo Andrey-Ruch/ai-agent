@@ -7,6 +7,7 @@ import { useTranscript } from '@/app/contexts/TranscriptContext'
 import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { ArrowUp, TriangleAlert, Info, AlertCircleIcon } from 'lucide-react'
+import AgentRespondingIndicator from './AgentRespondingIndicator'
 
 export interface TranscriptProps {
     userText: string
@@ -14,6 +15,7 @@ export interface TranscriptProps {
     onSendMessage: () => void
     canSend: boolean
     downloadRecording: () => void
+    isAgentResponding: boolean
 }
 
 export default function Transcript({
@@ -22,6 +24,7 @@ export default function Transcript({
     onSendMessage,
     canSend,
     downloadRecording,
+    isAgentResponding = false,
 }: TranscriptProps) {
     const { transcriptItems, toggleTranscriptItemExpand } = useTranscript()
     const transcriptRef = useRef<HTMLDivElement | null>(null)
@@ -97,7 +100,7 @@ export default function Transcript({
                                 }`
 
                                 const isTranscribing =
-                                    title === 'Transcribing…' || title === '[Transcribing...]'
+                                    title === '[Transcribing...]' || title === 'Transcribing…'
 
                                 const isBracketedMessage =
                                     title.startsWith('[') && title.endsWith(']')
@@ -203,6 +206,8 @@ export default function Transcript({
                                 )
                             }
                         })}
+
+                    {isAgentResponding && <AgentRespondingIndicator />}
                 </div>
             </div>
 

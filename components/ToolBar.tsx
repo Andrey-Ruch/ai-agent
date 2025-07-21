@@ -78,7 +78,7 @@ export default function ToolBar({
     }
 
     return (
-        <div className="w-full max-w-sm py-3 rounded-lg bg-white border shadow-sm">
+        <div className="w-full max-w-sm py-3 rounded-xl bg-white border shadow-sm">
             <div className="flex flex-col gap-2 justify-center items-center px-2">
                 <Tooltip>
                     <TooltipTrigger asChild>
