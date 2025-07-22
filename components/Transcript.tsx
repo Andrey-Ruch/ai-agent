@@ -90,7 +90,7 @@ export default function Transcript({
 
                             if (type === 'MESSAGE') {
                                 const isUser = role === 'user'
-                                const containerClasses = `flex justify-end flex-col ${
+                                const containerClasses = `flex justify-end flex-col text-[15px] ${
                                     isUser ? 'items-end' : 'items-start'
                                 }`
                                 const bubbleBase = `max-w-lg p-3 ${

@@ -388,7 +388,7 @@ export default function RealTimeConversation_v2() {
     const agentSetKey = searchParams.get('agentConfig') || 'default'
 
     return (
-        <div className="flex flex-row justify-center px-2 h-[calc(100vh-4.5rem)] relative">
+        <div className="flex flex-row justify-center h-[calc(100vh-3rem)] relative p-2">
             <div className="flex justify-center items-end">
                 <ToolBar
                     sessionStatus={sessionStatus}

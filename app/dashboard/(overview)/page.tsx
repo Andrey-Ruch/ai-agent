@@ -10,9 +10,9 @@ export default async function Page() {
                 <RealTimeConversation_v2 />
             </ResizablePanel>
             <ResizableHandle withHandle />
-            <ResizablePanel className="p-1" defaultSize={50} minSize={25}>
-                <Editor />
-                {/* <TipTapEditor /> */}
+            <ResizablePanel defaultSize={50} minSize={25}>
+                {/* <Editor /> */}
+                <TipTapEditor />
             </ResizablePanel>
         </ResizablePanelGroup>
     )

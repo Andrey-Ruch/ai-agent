@@ -13,7 +13,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <TranscriptProvider>
                     <EventProvider>
                         <FunctionResultsProvider>
-                            {/* sticky top-0 z-50 */}
+                            {/* In the calc function, 3rem refers to the height of the header in dashboard/layout.tsx */}
                             <header className="flex h-12 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 border-b">
                                 <div className="flex items-center gap-2 px-4">
                                     <SidebarTrigger className="-ml-1 hover:cursor-pointer" />
