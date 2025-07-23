@@ -1,6 +1,7 @@
 'use client'
 
 import { useEditor, EditorContent } from '@tiptap/react'
+import { useEffect } from 'react'
 
 // --- Tiptap Core Extensions ---
 import StarterKit from '@tiptap/starter-kit'
@@ -8,6 +9,11 @@ import TextAlign from '@tiptap/extension-text-align'
 
 // --- Components ---
 import MenuBar from '@/components/tiptap-editor/menu-bar'
+
+interface TipTapEditorProps {
+    content: string
+    onChange: (content: string) => void
+}
 
 const extensions = [
     StarterKit.configure({
@@ -27,37 +33,45 @@ const extensions = [
     }),
 ]
 
-export default function TipTapEditor() {
+export default function TipTapEditor({ content, onChange }: TipTapEditorProps) {
     const editor = useEditor({
         // Don't render immediately on the server to avoid SSR issues
         immediatelyRender: false,
-        // shouldRerenderOnTransaction: false,
+        shouldRerenderOnTransaction: false,
         editorProps: {
             attributes: {
-                autocomplete: 'off',
-                autocorrect: 'off',
-                autocapitalize: 'off',
-                'aria-label': 'Main content area, start typing to enter text.',
                 class: 'rounded-lg px-6 py-4 prose prose-sm sm:prose lg:prose-lg xl:prose-2xl focus:outline-none',
             },
         },
         extensions,
-        content: '<p>Hello World! 🌎️</p>',
+        content,
+        onUpdate: ({ editor }) => {
+            onChange(editor.getHTML())
+        },
     })
+
+    // Sync external content changes to the editor
+    useEffect(() => {
+        if (editor && content !== editor.getHTML()) {
+            editor.commands.setContent(content)
+        }
+    }, [editor, content])
 
     if (!editor) {
         return null
     }
 
     return (
-        <div className="h-full p-2">
+        // In the calc function, 3rem refers to the height of the header in dashboard/layout.tsx
+        <div className="h-[calc(100vh-3rem)] p-2">
             {/* Simple-editor-wrapper */}
             <div className="flex flex-col max-w-2xl mx-auto h-full gap-2 rounded-lg bg-white border">
                 <MenuBar editor={editor} />
                 <EditorContent
                     editor={editor}
                     role="presentation"
-                    className="h-full flex flex-col flex-1 my-0"
+                    className="h-full flex flex-col flex-1 my-0 overflow-y-auto"
+                    dir="auto"
                 />
             </div>
         </div>

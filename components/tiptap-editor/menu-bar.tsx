@@ -1,5 +1,4 @@
-import type { Editor } from '@tiptap/react'
-import { useEditorState } from '@tiptap/react'
+import { useEditorState, type Editor } from '@tiptap/react'
 import {
     Bold,
     Italic,
@@ -16,7 +15,6 @@ import {
     Undo2,
 } from 'lucide-react'
 import { Toggle } from '@/components/ui/toggle'
-import { Separator } from '@/components/ui/separator'
 
 export default function MenuBar({ editor }: { editor: Editor }) {
     // Read the current editor's state, and re-render the component when it changes
@@ -174,8 +172,8 @@ export default function MenuBar({ editor }: { editor: Editor }) {
                     disabled={isDisabled}
                     className="text-primary cursor-pointer">
                     {icon}
-                    </Toggle>
-                ))}
+                </Toggle>
+            ))}
         </div>
     )
 }

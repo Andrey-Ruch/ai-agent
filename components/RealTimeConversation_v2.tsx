@@ -388,6 +388,7 @@ export default function RealTimeConversation_v2() {
     const agentSetKey = searchParams.get('agentConfig') || 'default'
 
     return (
+        // In the calc function, 3rem refers to the height of the header in dashboard/layout.tsx
         <div className="flex flex-row justify-center h-[calc(100vh-3rem)] relative p-2">
             <div className="flex justify-center items-end">
                 <ToolBar

@@ -119,7 +119,8 @@ export default function Transcript({
                                                 <div
                                                     className={`whitespace-pre-wrap ${messageStyle} ${
                                                         isTranscribing ? 'opacity-70' : ''
-                                                    }`}>
+                                                    }`}
+                                                    dir="auto">
                                                     <ReactMarkdown>{displayTitle}</ReactMarkdown>
                                                 </div>
                                             </div>
@@ -213,6 +214,7 @@ export default function Transcript({
 
             <div className="pt-1 px-2 pb-3 flex flex-col flex-shrink-0 rounded-xl bg-white border shadow-sm">
                 <textarea
+                    name="user-text-message"
                     ref={inputRef}
                     value={userText}
                     onChange={(e) => setUserText(e.target.value)}
@@ -225,6 +227,7 @@ export default function Transcript({
                     className="flex-1 px-2 py-2 focus:outline-none resize-none rounded-md"
                     placeholder="Type a message..."
                     rows={2}
+                    dir="auto"
                 />
                 <Button
                     size="icon"

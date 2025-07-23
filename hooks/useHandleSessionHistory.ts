@@ -100,7 +100,8 @@ export function useHandleSessionHistory() {
     }
 
     function handleHistoryAdded(item: any) {
-        console.log('[handleHistoryAdded] ', item)
+        // console.log('[handleHistoryAdded] ', item)
+
         if (!item || item.type !== 'message') return
 
         const { itemId, role, content = [] } = item
@@ -125,7 +126,8 @@ export function useHandleSessionHistory() {
     }
 
     function handleHistoryUpdated(items: any[]) {
-        console.log('[handleHistoryUpdated] ', items)
+        // console.log('[handleHistoryUpdated] ', items)
+
         items.forEach((item: any) => {
             if (!item || item.type !== 'message') return
 
