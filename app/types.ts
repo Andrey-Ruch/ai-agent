@@ -31,7 +31,7 @@ export interface GuardrailResultType {
 
 export interface TranscriptItem {
     itemId: string
-    type: 'MESSAGE' | 'BREADCRUMB' | 'ERROR'
+    type: 'MESSAGE' | 'BREADCRUMB'
     role?: 'user' | 'assistant'
     title?: string
     data?: Record<string, any>
@@ -41,7 +41,6 @@ export interface TranscriptItem {
     status: 'IN_PROGRESS' | 'DONE'
     isHidden: boolean
     guardrailResult?: GuardrailResultType
-    errorLevel?: 'error' | 'warning' | 'info'
 }
 
 export interface LoggedEvent {

@@ -41,7 +41,6 @@ export default function ToolBar({
     function getConnectionButtonClasses() {
         const baseClasses = 'rounded-full text-primary'
         const cursorClass = isConnecting ? 'cursor-not-allowed' : 'cursor-pointer'
-        // const colorClass = isConnected ? '' : 'bg-green-600 hover:bg-green-700'
 
         return `${cursorClass} ${baseClasses}`
     }

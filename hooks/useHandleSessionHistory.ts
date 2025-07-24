@@ -17,6 +17,7 @@ export function useHandleSessionHistory() {
     const { logServerEvent } = useEvent()
     
     const { addFunctionResult } = useFunctionResults()
+    
     /* ----------------------- helpers ------------------------- */
 
     const extractMessageText = (content: any[] = []): string => {

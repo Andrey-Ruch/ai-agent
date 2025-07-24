@@ -5,8 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import { TranscriptItem } from '@/app/types'
 import { useTranscript } from '@/app/contexts/TranscriptContext'
 import { Button } from '@/components/ui/button'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { ArrowUp, TriangleAlert, Info, AlertCircleIcon } from 'lucide-react'
+import { ArrowUp } from 'lucide-react'
 import AgentRespondingIndicator from './AgentRespondingIndicator'
 
 export interface TranscriptProps {
@@ -18,6 +17,12 @@ export interface TranscriptProps {
     isAgentResponding: boolean
 }
 
+// TODO: Improve the maintenance of this component by breaking it down into smaller,
+// focused components and improving code organization.
+// Here's a plan:
+// Extract sub-components for different message types
+// Create reusable constants and styling patterns
+// Remove dead code and improve organization
 export default function Transcript({
     userText,
     setUserText,
@@ -62,10 +67,6 @@ export default function Transcript({
     return (
         <div className="flex flex-col flex-1 min-h-0 rounded-xl">
             <div className="flex flex-col flex-1 min-h-0">
-                {/* TODO: The scroll bar needs to be improved.
-                      That will appear on the right edge of the screen.
-                      Currently it appears inside the Transcript Content. */}
-
                 {/* Transcript Content */}
                 <div ref={transcriptRef} className="overflow-auto p-4 flex flex-col gap-y-4 h-full">
                     {[...transcriptItems]
@@ -160,49 +161,14 @@ export default function Transcript({
                                 //         )}
                                 //     </div>
                                 // )
-                            } else if (type === 'ERROR') {
-                                const errorLevel = item.errorLevel || 'error'
-
-                                let IconComponent
-                                let alertVariant
-                                let alertColor
-
-                                switch (errorLevel) {
-                                    case 'warning':
-                                        IconComponent = TriangleAlert
-                                        alertVariant = 'default'
-                                        alertColor = 'text-yellow-500'
-                                        break
-                                    case 'info':
-                                        IconComponent = Info
-                                        alertVariant = 'default'
-                                        alertColor = 'text-blue-600'
-                                        break
-                                    case 'error':
-                                    default:
-                                        IconComponent = AlertCircleIcon
-                                        alertVariant = 'destructive'
-                                        alertColor = 'text-red-600'
-                                        break
-                                }
-
-                                return (
-                                    <div key={itemId} className="flex justify-center">
-                                        <Alert className={`max-w-lg ${alertColor}`}>
-                                            <IconComponent />
-                                            <AlertTitle>{data?.error || 'Error'}</AlertTitle>
-                                            <AlertDescription>{title}</AlertDescription>
-                                        </Alert>
-                                    </div>
-                                )
                             } else {
                                 // Fallback if type is neither MESSAGE nor BREADCRUMB
                                 return (
                                     <div
                                         key={itemId}
-                                        className="flex justify-center text-gray-500 text-sm italic font-mono">
-                                        Unknown item type: {type}{' '}
-                                        <span className="ml-2 text-xs">{timestamp}</span>
+                                        className="flex justify-start items-center text-gray-500 text-sm italic font-mono">
+                                        Unknown item type: {type}
+                                        {/* <span className="ml-2 text-xs">{timestamp}</span> */}
                                     </div>
                                 )
                             }

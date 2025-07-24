@@ -41,7 +41,7 @@ const sdkScenarioMap: Record<string, RealtimeAgent[]> = {
 export default function RealTimeConversation_v2() {
     const searchParams = useSearchParams()!
 
-    const { addTranscriptMessage, addTranscriptBreadcrumb, addTranscriptError } = useTranscript()
+    const { addTranscriptMessage, addTranscriptBreadcrumb } = useTranscript()
     const { logClientEvent, logServerEvent } = useEvent()
 
     const [selectedAgentName, setSelectedAgentName] = useState<string>('')
@@ -151,7 +151,6 @@ export default function RealTimeConversation_v2() {
         logServerEvent(data, 'fetch_session_token_response')
 
         if (!data.client_secret?.value) {
-            addTranscriptError('No ephemeral key provided by the server', data, 'error')
             logClientEvent(data, 'error.no_ephemeral_key')
             console.error('No ephemeral key provided by the server')
             setSessionStatus('DISCONNECTED')

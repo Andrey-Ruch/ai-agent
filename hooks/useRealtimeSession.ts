@@ -4,7 +4,6 @@ import { RealtimeSession, RealtimeAgent, OpenAIRealtimeWebRTC } from '@openai/ag
 import { audioFormatForCodec, applyCodecPreferences } from '@/lib/codecUtils'
 import { useEvent } from '@/app/contexts/EventContext'
 import { useHandleSessionHistory } from '@/hooks/useHandleSessionHistory'
-import { useTranscript } from '@/app/contexts/TranscriptContext'
 import { SessionStatus } from '@/app/types'
 
 export interface RealtimeSessionCallbacks {
@@ -25,7 +24,6 @@ export function useRealtimeSession(callbacks: RealtimeSessionCallbacks = {}) {
     const [status, setStatus] = useState<SessionStatus>('DISCONNECTED')
     const [isAgentResponding, setIsAgentResponding] = useState(false)
     const { logClientEvent } = useEvent()
-    const { addTranscriptError } = useTranscript()
 
     const updateStatus = useCallback(
         (s: SessionStatus) => {
@@ -105,14 +103,6 @@ export function useRealtimeSession(callbacks: RealtimeSessionCallbacks = {}) {
                     type: 'error',
                     message: errorMessage,
                 })
-
-                // TODO: Consider different functionality from TranscriptContext for displaying error messages
-                // TODO: Add a more descriptive error message
-                addTranscriptError(
-                    'Something went wrong with the connection. Please try again.',
-                    { error: errorMessage },
-                    'error'
-                )
             })
 
             // history events

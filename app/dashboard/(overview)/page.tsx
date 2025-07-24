@@ -16,8 +16,7 @@ export default function Page() {
         console.log('\nfunctionResults', functionResults)
 
         const latestChapterDraft = functionResults
-            .filter((result) => result.functionName === 'generate_chapter_draft')
-            .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0]
+            .filter((result) => result.functionName === 'generate_chapter_draft').at(-1)
 
         console.log('\nlatestChapterDraft', latestChapterDraft)
 
@@ -26,7 +25,7 @@ export default function Page() {
 
             // Format the content with title as heading and text as body
             const formattedContent = `<h1>${title}</h1><p>${text}</p>`
-            console.log('\nformattedContent', formattedContent)
+
             setChapterContent(formattedContent)
         }
     }, [functionResults])

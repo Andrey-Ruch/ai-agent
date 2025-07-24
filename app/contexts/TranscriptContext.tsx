@@ -14,11 +14,6 @@ type TranscriptContextValue = {
     ) => void
     updateTranscriptMessage: (itemId: string, text: string, isDelta: boolean) => void
     addTranscriptBreadcrumb: (title: string, data?: Record<string, any>) => void
-    addTranscriptError: (
-        title: string,
-        data?: Record<string, any>,
-        errorLevel?: 'error' | 'warning' | 'info'
-    ) => void
     toggleTranscriptItemExpand: (itemId: string) => void
     updateTranscriptItem: (itemId: string, updatedProperties: Partial<TranscriptItem>) => void
 }
@@ -36,8 +31,10 @@ export const TranscriptProvider: FC<PropsWithChildren> = ({ children }) => {
             minute: '2-digit',
             second: '2-digit',
         })
-        const ms = now.getMilliseconds().toString().padStart(3, '0')
-        return `${time}.${ms}`
+        // const ms = now.getMilliseconds().toString().padStart(3, '0')
+        // return `${time}.${ms}`
+        
+        return `${time}`
     }
 
     const addTranscriptMessage: TranscriptContextValue['addTranscriptMessage'] = (
@@ -108,28 +105,6 @@ export const TranscriptProvider: FC<PropsWithChildren> = ({ children }) => {
         ])
     }
 
-    const addTranscriptError: TranscriptContextValue['addTranscriptError'] = (
-        title,
-        data,
-        errorLevel = 'error'
-    ) => {
-        setTranscriptItems((prev) => [
-            ...prev,
-            {
-                itemId: `error-${uuidv4()}`,
-                type: 'ERROR',
-                title,
-                data,
-                expanded: false,
-                timestamp: newTimestampPretty(),
-                createdAtMs: Date.now(),
-                status: 'DONE',
-                isHidden: false,
-                errorLevel,
-            },
-        ])
-    }
-
     const toggleTranscriptItemExpand: TranscriptContextValue['toggleTranscriptItemExpand'] = (
         itemId
     ) => {
@@ -154,7 +129,6 @@ export const TranscriptProvider: FC<PropsWithChildren> = ({ children }) => {
                 addTranscriptMessage,
                 updateTranscriptMessage,
                 addTranscriptBreadcrumb,
-                addTranscriptError,
                 toggleTranscriptItemExpand,
                 updateTranscriptItem,
             }}>
