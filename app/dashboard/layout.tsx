@@ -1,9 +1,14 @@
+import { Metadata } from 'next'
 import { TranscriptProvider } from '@/app/contexts/TranscriptContext'
 import { EventProvider } from '@/app/contexts/EventContext'
 import { FunctionResultsProvider } from '@/app/contexts/FunctionResultsContext'
 import { AppSidebar } from '@/components/app-sidebar'
 import { Separator } from '@/components/ui/separator'
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+
+export const metadata: Metadata = {
+    title: 'Workspace',
+}
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     return (

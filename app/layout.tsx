@@ -14,9 +14,11 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-    title: 'AI Agent',
-    description:
-        'Build voice agents that can understand audio and respond back in natural language',
+    title: {
+        template: '%s | Agatha',
+        default: 'Agatha',
+    },
+    description: 'Your space for creation',
 }
 
 export default function RootLayout({
