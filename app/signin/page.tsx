@@ -18,9 +18,13 @@ export default async function SignInPage(props: {
 }) {
     const session = await auth()
 
+    console.log('[Signin page] session', session)
+
     if (session) {
-        redirect('/')
+        redirect('/dashboard')
     }
+
+    const searchParams = await props.searchParams
 
     return (
         <div className="flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
@@ -33,7 +37,7 @@ export default async function SignInPage(props: {
                                 'use server'
                                 try {
                                     await signIn(provider.id, {
-                                        redirectTo: props.searchParams?.callbackUrl ?? '',
+                                        redirectTo: searchParams?.callbackUrl ?? '',
                                     })
                                 } catch (error) {
                                     // Signin can fail for a number of reasons, such as the user
@@ -58,16 +62,14 @@ export default async function SignInPage(props: {
 
                     <Card>
                         <CardHeader className="text-center">
-                            <CardTitle className="text-2xl text-main font-bold">
-                                Welcome back
-                            </CardTitle>
-                            <CardDescription>Continue with your Google account</CardDescription>
+                            <CardTitle className="text-xl text-main font-semibold">Welcome to Agatha</CardTitle>
+                            <CardDescription>Continue with your account</CardDescription>
 
-                            {props.searchParams.error && (
+                            {searchParams.error && (
                                 <p className="text-sm text-red-500">
-                                    {props.searchParams.error === 'OAuthSignin'
+                                    {searchParams.error === 'OAuthSignin'
                                         ? 'Error signing in'
-                                        : props.searchParams.error}
+                                        : searchParams.error}
                                 </p>
                             )}
                         </CardHeader>
@@ -83,18 +85,17 @@ export default async function SignInPage(props: {
                                                 'use server'
                                                 try {
                                                     await signIn(provider.id, {
-                                                        redirectTo:
-                                                            props.searchParams.callbackUrl ?? '',
+                                                        redirectTo: searchParams.callbackUrl ?? '/dashboard',
                                                     })
                                                 } catch (error) {
                                                     // Signin can fail for a number of reasons, such as the user
                                                     // not existing, or the user not having the correct role.
                                                     // In some cases, you may want to redirect to a custom error
-                                                    if (error instanceof AuthError) {
-                                                        return redirect(
-                                                            `${SIGNIN_ERROR_URL}?error=${error.type}`
-                                                        )
-                                                    }
+                                                    // if (error instanceof AuthError) {
+                                                    //     return redirect(
+                                                    //         `${SIGNIN_ERROR_URL}?error=${error.type}`
+                                                    //     )
+                                                    // }
 
                                                     // Docs:
                                                     // https://nextjs.org/docs/app/api-reference/functions/redirect#server-component
@@ -114,10 +115,9 @@ export default async function SignInPage(props: {
                                                         alt={provider.name}
                                                         width={16}
                                                         height={16}
-                                                        className="mr-2"
                                                     />
                                                 )}
-                                                Continue with {provider.name}
+                                                {provider.name}
                                             </Button>
                                         </form>
                                     ))}
