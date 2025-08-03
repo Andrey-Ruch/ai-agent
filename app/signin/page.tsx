@@ -14,7 +14,7 @@ const providerIcons: Record<string, string> = {
 }
 
 export default async function SignInPage(props: {
-    searchParams: { callbackUrl: string | undefined; error?: string }
+    searchParams: Promise<{ callbackUrl: string | undefined; error?: string }>
 }) {
     const session = await auth()
 
@@ -62,7 +62,9 @@ export default async function SignInPage(props: {
 
                     <Card>
                         <CardHeader className="text-center">
-                            <CardTitle className="text-xl text-main font-semibold">Welcome to Agatha</CardTitle>
+                            <CardTitle className="text-xl text-main font-semibold">
+                                Welcome to Agatha
+                            </CardTitle>
                             <CardDescription>Continue with your account</CardDescription>
 
                             {searchParams.error && (
@@ -85,7 +87,9 @@ export default async function SignInPage(props: {
                                                 'use server'
                                                 try {
                                                     await signIn(provider.id, {
-                                                        redirectTo: searchParams.callbackUrl ?? '/dashboard',
+                                                        redirectTo:
+                                                            searchParams.callbackUrl ??
+                                                            '/dashboard',
                                                     })
                                                 } catch (error) {
                                                     // Signin can fail for a number of reasons, such as the user
