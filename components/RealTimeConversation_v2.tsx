@@ -26,7 +26,7 @@ import useAudioDownload from '@/hooks/useAudioDownload'
 import { allAgentSets, defaultAgentSetKey } from '@/app/agentConfigs'
 import {
     chatSupervisorScenario,
-    chatSupervisorCompanyName,
+    // chatSupervisorCompanyName,
 } from '@/app/agentConfigs/chatSupervisor'
 import { ghostwriterScenario } from '@/app/agentConfigs/ghostwriter'
 
