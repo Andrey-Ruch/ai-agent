@@ -1,6 +1,13 @@
+import { requireAuth } from '@/lib/apiAuth'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
+    const authResult = await requireAuth()
+
+    if (!authResult.isAuthenticated) {
+        return authResult.response
+    }
+
     try {
         const response = await fetch('https://api.openai.com/v1/realtime/sessions', {
             method: 'POST',
