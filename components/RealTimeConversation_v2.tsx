@@ -17,7 +17,7 @@ import type { RealtimeAgent } from '@openai/agents/realtime'
 import { useTranscript } from '@/app/contexts/TranscriptContext'
 import { useEvent } from '@/app/contexts/EventContext'
 import { useRealtimeSession } from '@/hooks/useRealtimeSession'
-import { createModerationGuardrail } from '@/app/agentConfigs/guardrails'
+// import { createModerationGuardrail } from '@/app/agentConfigs/guardrails'
 import { useHandleSessionHistory } from '@/hooks/useHandleSessionHistory'
 
 import useAudioDownload from '@/hooks/useAudioDownload'
@@ -176,10 +176,10 @@ export default function RealTimeConversation_v2() {
                     reorderedAgents.unshift(agent)
                 }
 
-                const companyName =
-                    agentSetKey === 'customerServiceRetail'
-                        ? 'customerServiceRetailCompanyName'
-                        : chatSupervisorCompanyName
+                // const companyName =
+                //     agentSetKey === 'customerServiceRetail'
+                //         ? 'customerServiceRetailCompanyName'
+                //         : chatSupervisorCompanyName
                 // const guardrail = createModerationGuardrail(companyName)
 
                 await connect({
