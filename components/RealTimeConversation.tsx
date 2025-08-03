@@ -9,7 +9,7 @@ import Events from '@/components/Events'
 
 // Types
 import { SessionStatus, TranscriptItem } from '../app/types'
-import type { RealtimeAgent } from '@openai/agents/realtime'
+// import type { RealtimeAgent } from '@openai/agents/realtime'
 
 // Context providers & hooks
 import { useTranscript } from '@/app/contexts/TranscriptContext'
@@ -71,7 +71,10 @@ export default function RealTimeConversation() {
     // Initialize the recording hook.
     const { startRecording, stopRecording, downloadRecording } = useAudioDownload()
 
-    const sendClientEvent = (eventObj: any, eventNameSuffix = '') => {
+    const sendClientEvent = (
+        eventObj: any
+        // eventNameSuffix = ''
+    ) => {
         if (!sdkClientRef.current) {
             console.error('SDK client not available', eventObj)
             return
@@ -474,6 +477,7 @@ export default function RealTimeConversation() {
     }
 
     const sendSimulatedUserMessage = (text: string) => {
+        console.log('[RealTimeConversation] sendSimulatedUserMessage text', text)
         // const id = uuidv4().slice(0, 32)
         // addTranscriptMessage(id, 'user', text, true)
 
@@ -491,8 +495,8 @@ export default function RealTimeConversation() {
         // )
 
         sendClientEvent(
-            { type: 'response.create' },
-            '(trigger response after simulated user text message)'
+            { type: 'response.create' }
+            // '(trigger response after simulated user text message)'
         )
     }
 

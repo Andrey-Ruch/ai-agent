@@ -45,6 +45,7 @@ export default async function Page() {
                             <form
                                 action={async (formData) => {
                                     'use server'
+                                    console.log('[app/page.tsx] formData', formData)
                                     await signOut()
                                 }}
                                 className="w-full">

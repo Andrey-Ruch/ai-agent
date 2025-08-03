@@ -7,11 +7,10 @@ import { v4 as uuidv4 } from 'uuid'
 // UI components
 import Transcript from '@/components/Transcript'
 import ToolBar from '@/components/ToolBar'
-import Events from '@/components/Events'
-import AgentRespondingIndicator from '@/components/AgentRespondingIndicator'
+// import Events from '@/components/Events'
 
 // Types
-import { SessionStatus, TranscriptItem } from '@/app/types'
+import { SessionStatus } from '@/app/types'
 import type { RealtimeAgent } from '@openai/agents/realtime'
 
 // Context providers & hooks
@@ -24,7 +23,6 @@ import { useHandleSessionHistory } from '@/hooks/useHandleSessionHistory'
 import useAudioDownload from '@/hooks/useAudioDownload'
 
 // Agent configs
-import { RealtimeClient } from '@/app/agentConfigs/realtimeClient'
 import { allAgentSets, defaultAgentSetKey } from '@/app/agentConfigs'
 import {
     chatSupervisorScenario,
@@ -182,7 +180,7 @@ export default function RealTimeConversation_v2() {
                     agentSetKey === 'customerServiceRetail'
                         ? 'customerServiceRetailCompanyName'
                         : chatSupervisorCompanyName
-                const guardrail = createModerationGuardrail(companyName)
+                // const guardrail = createModerationGuardrail(companyName)
 
                 await connect({
                     getEphemeralKey: async () => EPHEMERAL_KEY,
@@ -293,21 +291,21 @@ export default function RealTimeConversation_v2() {
         }
     }
 
-    const handleAgentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const newAgentConfig = e.target.value
-        const url = new URL(window.location.toString())
-        url.searchParams.set('agentConfig', newAgentConfig)
-        window.location.replace(url.toString())
-    }
+    // const handleAgentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    //     const newAgentConfig = e.target.value
+    //     const url = new URL(window.location.toString())
+    //     url.searchParams.set('agentConfig', newAgentConfig)
+    //     window.location.replace(url.toString())
+    // }
 
-    const handleSelectedAgentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const newAgentName = e.target.value
-        // Reconnect session with the newly selected agent as root so that tool
-        // execution works correctly.
-        disconnectFromRealtime()
-        setSelectedAgentName(newAgentName)
-        // connectToRealtime will be triggered by effect watching selectedAgentName
-    }
+    // const handleSelectedAgentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    //     const newAgentName = e.target.value
+    //     // Reconnect session with the newly selected agent as root so that tool
+    //     // execution works correctly.
+    //     disconnectFromRealtime()
+    //     setSelectedAgentName(newAgentName)
+    //     // connectToRealtime will be triggered by effect watching selectedAgentName
+    // }
 
     useEffect(() => {
         const storedPushToTalkUI = localStorage.getItem('pushToTalkUI')
@@ -385,6 +383,7 @@ export default function RealTimeConversation_v2() {
     }, [sessionStatus])
 
     const agentSetKey = searchParams.get('agentConfig') || 'default'
+    console.log('[RealTimeConversation_v2] agentSetKey', agentSetKey)
 
     return (
         // In the calc function, 3rem refers to the height of the header in dashboard/layout.tsx

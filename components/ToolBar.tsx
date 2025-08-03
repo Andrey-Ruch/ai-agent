@@ -19,15 +19,15 @@ interface ToolBarProps {
 }
 
 export default function ToolBar({
+    // isPTTUserSpeaking,
+    // handleTalkButtonDown,
+    // handleTalkButtonUp,
+    // isAudioPlaybackEnabled,
+    // setIsAudioPlaybackEnabled,
     sessionStatus,
     onToggleConnection,
     isPTTActive,
     setIsPTTActive,
-    isPTTUserSpeaking,
-    handleTalkButtonDown,
-    handleTalkButtonUp,
-    isAudioPlaybackEnabled,
-    setIsAudioPlaybackEnabled,
 }: ToolBarProps) {
     const isConnected = sessionStatus === 'CONNECTED'
     const isConnecting = sessionStatus === 'CONNECTING'

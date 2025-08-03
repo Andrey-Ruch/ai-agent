@@ -1,13 +1,13 @@
 import { redirect } from 'next/navigation'
 import { signIn, auth, providerMap } from '@/lib/auth'
-import { AuthError } from 'next-auth'
+// import { AuthError } from 'next-auth'
 import Image from 'next/image'
 
 // UI Components
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
-const SIGNIN_ERROR_URL = '/error'
+// const SIGNIN_ERROR_URL = '/error'
 
 const providerIcons: Record<string, string> = {
     google: 'https://authjs.dev/img/providers/google.svg',

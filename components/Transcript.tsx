@@ -28,13 +28,16 @@ export default function Transcript({
     setUserText,
     onSendMessage,
     canSend,
-    downloadRecording,
+    // downloadRecording,
     isAgentResponding = false,
 }: TranscriptProps) {
-    const { transcriptItems, toggleTranscriptItemExpand } = useTranscript()
+    const {
+        transcriptItems,
+        // toggleTranscriptItemExpand
+    } = useTranscript()
     const transcriptRef = useRef<HTMLDivElement | null>(null)
     const [prevLogs, setPrevLogs] = useState<TranscriptItem[]>([])
-    const [justCopied, setJustCopied] = useState(false)
+    // const [justCopied, setJustCopied] = useState(false)
     const inputRef = useRef<HTMLTextAreaElement | null>(null)
 
     function scrollToBottom() {
@@ -76,12 +79,12 @@ export default function Transcript({
                                 itemId,
                                 type,
                                 role,
-                                data,
-                                expanded,
-                                timestamp,
+                                // data,
+                                // expanded,
+                                // timestamp,
                                 title = '',
                                 isHidden,
-                                status,
+                                // status,
                                 guardrailResult,
                             } = item
 
