@@ -2,7 +2,8 @@
 
 import * as React from 'react'
 import Link from 'next/link'
-import { Feather, LibraryBig, BookOpenText } from 'lucide-react'
+import { LibraryBig, BookOpenText } from 'lucide-react'
+import { Session } from 'next-auth'
 
 import { NavProjects } from '@/components/nav-projects'
 import { NavMain } from '@/components/nav-main'
@@ -21,8 +22,8 @@ import {
 // This is sample data
 const data = {
     user: {
-        name: 'Andrey',
-        email: 'andrey@example.com',
+        name: 'User name',
+        email: 'user@example.com',
         avatar: 'https://github.com/shadcn.png',
     },
     navMain: [
@@ -75,7 +76,20 @@ const data = {
     ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+    session: Session | null
+}
+
+export function AppSidebar({ session, ...props }: AppSidebarProps) {
+    // TODO: The import of user information needs to be improved, the same data is also exported in NavBar.
+    // A dedicated function should be considered.
+    const user = {
+        name: session?.user?.name || 'User',
+        email: session?.user?.email || 'user@example.com',
+        avatar: session?.user?.image || 'https://github.com/shadcn.png',
+    }
+    console.log('[AppSidebar] user', user)
+
     return (
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
@@ -84,14 +98,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         <SidebarMenuButton size="lg" asChild>
                             <Link href="/">
                                 <div className="text-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                                    {/* <Feather className="size-5" /> */}
                                     <img src="/logo.svg" alt="Agatha" className="size-6" />
                                 </div>
                                 <div className="flex flex-col gap-0.5 leading-none">
-                                    <span className="font-bold text-primary text-base">
+                                    <span className="font-semibold text-primary text-base">
                                         Agatha
                                     </span>
-                                    {/* <span className="">v1.0.0</span> */}
                                 </div>
                             </Link>
                         </SidebarMenuButton>
@@ -103,7 +115,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <NavProjects projects={data.projects} />
             </SidebarContent>
             <SidebarFooter>
-                <NavUser user={data.user} />
+                <NavUser user={user} />
             </SidebarFooter>
             <SidebarRail />
         </Sidebar>

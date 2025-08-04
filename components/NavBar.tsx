@@ -97,23 +97,9 @@ const Logo = ({ logo }: { logo: LogoConfig }) => (
     </Link>
 )
 
-// Sign Out Form Component
-const SignOutForm = ({ className = '' }: { className?: string }) => (
-    <form
-        action={async () => {
-            'use server'
-            await signOut()
-        }}>
-        <button type="submit" className={className}>
-            <LogOut />
-            Sign out
-        </button>
-    </form>
-)
-
 // User Profile Component
 const UserProfile = ({ user }: { user: ReturnType<typeof getUserDisplayData> }) => (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 p-2 rounded-md hover:bg-accent cursor-pointer">
         <Avatar className="h-8 w-8 rounded-lg">
             <AvatarImage src={user.imageUrl} alt={user.fullName} />
             <AvatarFallback className="rounded-lg bg-primary text-white">
@@ -130,10 +116,8 @@ const UserProfile = ({ user }: { user: ReturnType<typeof getUserDisplayData> }) 
 // User Dropdown Component
 const UserDropdown = ({ user }: { user: ReturnType<typeof getUserDisplayData> }) => (
     <DropdownMenu>
-        <DropdownMenuTrigger asChild className="cursor-pointer">
-            <div>
-                <UserProfile user={user} />
-            </div>
+        <DropdownMenuTrigger asChild>
+            <UserProfile user={user} />
         </DropdownMenuTrigger>
         <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"

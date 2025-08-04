@@ -22,8 +22,8 @@ export default async function DashboardLayout({ children }: { children: React.Re
     }
 
     return (
-        <SidebarProvider defaultOpen={false}>
-            <AppSidebar />
+        <SidebarProvider defaultOpen={true}>
+            <AppSidebar session={session} />
             <SidebarInset>
                 <TranscriptProvider>
                     <EventProvider>
