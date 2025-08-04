@@ -18,7 +18,7 @@ import {
     SidebarMenuButton,
 } from '@/components/ui/sidebar'
 
-// This is sample data.
+// This is sample data
 const data = {
     user: {
         name: 'Andrey',
@@ -84,10 +84,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         <SidebarMenuButton size="lg" asChild>
                             <Link href="/">
                                 <div className="text-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                                    <Feather className="size-5" />
+                                    {/* <Feather className="size-5" /> */}
+                                    <img src="/logo.svg" alt="Agatha" className="size-6" />
                                 </div>
                                 <div className="flex flex-col gap-0.5 leading-none">
-                                    <span className="font-bold text-foreground text-base">
+                                    <span className="font-bold text-primary text-base">
                                         Agatha
                                     </span>
                                     {/* <span className="">v1.0.0</span> */}

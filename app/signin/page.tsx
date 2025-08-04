@@ -89,7 +89,7 @@ export default async function SignInPage(props: {
                                                     await signIn(provider.id, {
                                                         redirectTo:
                                                             searchParams.callbackUrl ??
-                                                            '/dashboard',
+                                                            '/dashboard?agentConfig=ghostwriter',
                                                     })
                                                 } catch (error) {
                                                     // Signin can fail for a number of reasons, such as the user
