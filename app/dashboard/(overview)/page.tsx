@@ -32,7 +32,7 @@ export default function Page() {
 
     function onChapterContentChange(content: string) {
         setChapterContent(content)
-        console.log(content)
+        // console.log(content)
     }
 
     return (

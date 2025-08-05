@@ -16,8 +16,34 @@ import {
     Undo2,
 } from 'lucide-react'
 import { Toggle } from '@/components/ui/toggle'
+import { useRef } from 'react'
+import { convertToBase64 } from '@/lib/image-upload'
 
 export default function MenuBar({ editor }: { editor: Editor }) {
+    const fileInputRef = useRef<HTMLInputElement>(null)
+
+    // Upload image to the editor
+    async function handleImageUpload(event: React.ChangeEvent<HTMLInputElement>) {
+        const file = event.target.files?.[0]
+
+        if (!file) return
+
+        try {
+            const base64 = await convertToBase64(file)
+            // console.log('[MenuBar handleImageUpload] base64', base64)
+            editor.chain().focus().setImage({ src: base64 }).run()
+        } catch (error) {
+            console.error('Failed to upload image:', error)
+        }
+    }
+
+    // Open the file input when the image button is clicked
+    function handleImageClick() {
+        if (fileInputRef.current) {
+            fileInputRef.current.click()
+        }
+    }
+
     // Read the current editor's state, and re-render the component when it changes
     const editorState = useEditorState({
         editor,
@@ -69,14 +95,6 @@ export default function MenuBar({ editor }: { editor: Editor }) {
             }
         },
     })
-
-    const addImage = () => {
-        const url = window.prompt('URL')
-
-        if (url) {
-            editor.chain().focus().setImage({ src: url }).run()
-        }
-    }
 
     // Configuration array for all toolbar buttons
     const toolbarButtons = [
@@ -160,7 +178,7 @@ export default function MenuBar({ editor }: { editor: Editor }) {
         {
             key: 'image',
             icon: <ImagePlus />,
-            action: addImage,
+            action: handleImageClick,
             isActive: false,
             isDisabled: false,
         },
@@ -168,18 +186,29 @@ export default function MenuBar({ editor }: { editor: Editor }) {
             key: 'undo',
             icon: <Undo2 />,
             action: () => editor.chain().focus().undo().run(),
+            isActive: false,
             isDisabled: !editorState.canUndo,
         },
         {
             key: 'redo',
             icon: <Redo2 />,
             action: () => editor.chain().focus().redo().run(),
+            isActive: false,
             isDisabled: !editorState.canRedo,
         },
     ]
 
     return (
         <div className="bg-white p-1 space-x-2 rounded-t-lg border-b">
+            {/* Hidden file input */}
+            <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="hidden"
+            />
+
             {toolbarButtons.map(({ key, icon, action, isActive, isDisabled }) => (
                 <Toggle
                     key={key}
