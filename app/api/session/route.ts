@@ -1,4 +1,4 @@
-import { requireAuth } from '@/lib/apiAuth'
+import { requireAuth } from '@/lib/auth/apiAuth'
 import { NextResponse } from 'next/server'
 
 export async function GET() {

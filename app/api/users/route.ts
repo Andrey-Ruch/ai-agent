@@ -1,6 +1,6 @@
-import { requireAuth } from '@/lib/apiAuth'
+import { requireAuth } from '@/lib/auth/apiAuth'
 import { NextResponse } from 'next/server'
-import connectDB from '@/lib/mongodb'
+import connectDB from '@/lib/database/mongodb'
 import User from '@/models/User'
 
 // TODO: The function is temporary and for testing! It needs to be changed.
@@ -13,7 +13,7 @@ export async function GET(request: Request) {
 
     try {
         console.log('[api/users/route.ts] GET request', request)
-        
+
         await connectDB()
         const users = await User.find()
 

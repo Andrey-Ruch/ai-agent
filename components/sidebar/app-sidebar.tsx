@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { LibraryBig, BookOpenText } from 'lucide-react'
 import { Session } from 'next-auth'
 
-import { NavProjects } from '@/components/nav-projects'
-import { NavMain } from '@/components/nav-main'
-import { NavUser } from '@/components/nav-user'
+import { NavProjects } from '@/components/sidebar/nav-projects'
+import { NavMain } from '@/components/sidebar/nav-main'
+import { NavUser } from '@/components/sidebar/nav-user'
 import {
     Sidebar,
     SidebarContent,

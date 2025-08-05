@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { signIn, auth, providerMap } from '@/lib/auth'
+import { signIn, auth, providerMap } from '@/lib/auth/auth'
 // import { AuthError } from 'next-auth'
 import Image from 'next/image'
 
@@ -21,7 +21,7 @@ export default async function SignInPage(props: {
     console.log('[Signin page] session', session)
 
     if (session) {
-        redirect('/dashboard')
+        redirect('/dashboard?agentConfig=ghostwriter')
     }
 
     const searchParams = await props.searchParams

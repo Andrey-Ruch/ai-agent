@@ -1,5 +1,6 @@
 import { useEditorState, type Editor } from '@tiptap/react'
 import {
+    ImagePlus,
     Bold,
     Italic,
     Underline,
@@ -62,12 +63,20 @@ export default function MenuBar({ editor }: { editor: Editor }) {
                 isAlignRight: ctx.editor.isActive('alignRight'),
                 canAlignRight: ctx.editor.can().chain().focus().setTextAlign('right').run(),
 
-                // Undo
+                // Undo and Redo
                 canUndo: ctx.editor.can().chain().focus().undo().run(),
                 canRedo: ctx.editor.can().chain().focus().redo().run(),
             }
         },
     })
+
+    const addImage = () => {
+        const url = window.prompt('URL')
+
+        if (url) {
+            editor.chain().focus().setImage({ src: url }).run()
+        }
+    }
 
     // Configuration array for all toolbar buttons
     const toolbarButtons = [
@@ -147,6 +156,13 @@ export default function MenuBar({ editor }: { editor: Editor }) {
             action: () => editor.chain().focus().setTextAlign('right').run(),
             isActive: editorState.isAlignRight,
             isDisabled: !editorState.canAlignRight,
+        },
+        {
+            key: 'image',
+            icon: <ImagePlus />,
+            action: addImage,
+            isActive: false,
+            isDisabled: false,
         },
         {
             key: 'undo',

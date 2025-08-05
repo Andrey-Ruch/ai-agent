@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 // --- Tiptap Core Extensions ---
 import StarterKit from '@tiptap/starter-kit'
 import TextAlign from '@tiptap/extension-text-align'
+import Image from '@tiptap/extension-image'
 
 // --- Components ---
 import MenuBar from '@/components/tiptap-editor/menu-bar'
@@ -30,6 +31,12 @@ const extensions = [
     }),
     TextAlign.configure({
         types: ['heading', 'paragraph'],
+    }),
+    Image.configure({
+        HTMLAttributes: {
+            class: 'max-w-full h-auto',
+        },
+        allowBase64: true, // Allow base64 images during development
     }),
 ]
 

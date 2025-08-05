@@ -5,8 +5,8 @@ import { useSearchParams } from 'next/navigation'
 import { v4 as uuidv4 } from 'uuid'
 
 // UI components
-import Transcript from '@/components/Transcript'
-import ToolBar from '@/components/ToolBar'
+import Transcript from '@/components/RealTimeConversation/Transcript'
+import ToolBar from '@/components/RealTimeConversation/ToolBar'
 // import Events from '@/components/Events'
 
 // Types

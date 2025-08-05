@@ -6,7 +6,7 @@ import { TranscriptItem } from '@/app/types'
 import { useTranscript } from '@/app/contexts/TranscriptContext'
 import { Button } from '@/components/ui/button'
 import { ArrowUp } from 'lucide-react'
-import AgentRespondingIndicator from './AgentRespondingIndicator'
+import AgentRespondingIndicator from '@/components/RealTimeConversation/AgentRespondingIndicator'
 
 export interface TranscriptProps {
     userText: string

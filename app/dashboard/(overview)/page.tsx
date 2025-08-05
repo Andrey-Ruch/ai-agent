@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import RealTimeConversation_v2 from '@/components/RealTimeConversation_v2'
+import RealTimeConversation_v2 from '@/components/RealTimeConversation/RealTimeConversation_v2'
 import TipTapEditor from '@/components/tiptap-editor'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
 import { useFunctionResults } from '@/app/contexts/FunctionResultsContext'

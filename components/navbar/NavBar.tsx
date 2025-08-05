@@ -1,4 +1,4 @@
-import { signOut } from '@/lib/auth'
+import { signOut } from '@/lib/auth/auth'
 import Link from 'next/link'
 import { Session } from 'next-auth'
 
@@ -145,7 +145,7 @@ const UserDropdown = ({ user }: { user: ReturnType<typeof getUserDisplayData> })
                 <DropdownMenuItem asChild>
                     <button
                         type="submit"
-                        className="w-full flex cursor-default select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0">
+                        className="w-full flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0">
                         <LogOut />
                         Sign out
                     </button>
@@ -239,7 +239,7 @@ const MobileNavigation = ({
                                         'use server'
                                         await signOut()
                                     }}>
-                                    <Button type="submit" className="w-full">
+                                    <Button type="submit" className="w-full cursor-pointer">
                                         <LogOut />
                                         Sign out
                                     </Button>
@@ -300,7 +300,7 @@ const renderMenuItem = (item: MenuItem) => {
         <NavigationMenuItem key={item.title}>
             <NavigationMenuLink
                 href={item.url}
-                className="bg-background hover:bg-muted hover:text-accent-foreground group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors">
+                className="bg-background hover:bg-accent group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors">
                 {item.title}
             </NavigationMenuLink>
         </NavigationMenuItem>
@@ -333,7 +333,7 @@ const renderMobileMenuItem = (item: MenuItem) => {
 const SubMenuLink = ({ item }: { item: MenuItem }) => {
     return (
         <Link
-            className="hover:bg-muted hover:text-accent-foreground flex select-none flex-row gap-4 rounded-md p-3 leading-none no-underline outline-none transition-colors"
+            className="hover:bg-accent flex select-none flex-row gap-4 rounded-md p-3 leading-none no-underline outline-none transition-colors"
             href={item.url}>
             <div className="text-foreground">{item.icon}</div>
             <div>

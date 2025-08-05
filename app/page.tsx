@@ -1,14 +1,14 @@
 import Link from 'next/link'
-import { auth } from '@/lib/auth'
+import { auth } from '@/lib/auth/auth'
 
 // Components
-import NavBar from '@/components/NavBar'
+import NavBar from '@/components/navbar/NavBar'
 import { Button } from '@/components/ui/button'
 
 export default async function Page() {
     const session = await auth()
     console.log('[Root layout page] session', session)
-    
+
     return (
         <div className="container mx-auto px-4">
             <NavBar session={session} />
