@@ -7,7 +7,6 @@ export type Role = 'admin' | 'user'
 export interface UserDocument {
     _id: string
     email: string
-    // password: string
     firstName: string
     lastName: string
     gender: Gender
@@ -31,7 +30,6 @@ const UserSchema = new Schema<UserDocument>(
             required: [true, 'Email is required'],
             match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Email is invalid'],
         },
-        // password: { type: String, required: true },
         firstName: { type: String, required: true },
         lastName: { type: String, required: true },
         gender: { type: String, required: true },

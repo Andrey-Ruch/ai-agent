@@ -18,8 +18,6 @@ export default async function SignInPage(props: {
 }) {
     const session = await auth()
 
-    console.log('[Signin page] session', session)
-
     if (session) {
         redirect('/dashboard?agentConfig=ghostwriter')
     }

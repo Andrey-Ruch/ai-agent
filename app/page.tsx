@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 
 export default async function Page() {
     const session = await auth()
-    console.log('[Root layout page] session', session)
 
     return (
         <div className="container mx-auto px-4">
