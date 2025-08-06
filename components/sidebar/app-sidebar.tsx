@@ -2,9 +2,10 @@
 
 import * as React from 'react'
 import Link from 'next/link'
-import { LibraryBig, BookOpenText } from 'lucide-react'
+import Image from 'next/image'
 import { Session } from 'next-auth'
 
+// Components
 import { NavProjects } from '@/components/sidebar/nav-projects'
 import { NavMain } from '@/components/sidebar/nav-main'
 import { NavUser } from '@/components/sidebar/nav-user'
@@ -18,6 +19,7 @@ import {
     SidebarMenuItem,
     SidebarMenuButton,
 } from '@/components/ui/sidebar'
+import { LibraryBig, BookOpenText } from 'lucide-react'
 
 // This is sample data
 const data = {
@@ -98,7 +100,7 @@ export function AppSidebar({ session, ...props }: AppSidebarProps) {
                         <SidebarMenuButton size="lg" asChild>
                             <Link href="/">
                                 <div className="text-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                                    <img src="/logo.svg" alt="Agatha" className="size-6" />
+                                    <Image src="/logo.svg" alt="Agatha" className="size-6" width={24} height={24} />
                                 </div>
                                 <div className="flex flex-col gap-0.5 leading-none">
                                     <span className="font-semibold text-primary text-base">

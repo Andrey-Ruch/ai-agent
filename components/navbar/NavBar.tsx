@@ -1,5 +1,6 @@
 import { signOut } from '@/lib/auth/auth'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Session } from 'next-auth'
 
 // Components
@@ -92,7 +93,7 @@ function getUserDisplayData(session: Session | null) {
 // Logo Component
 const Logo = ({ logo }: { logo: LogoConfig }) => (
     <Link href={logo.url} className="flex items-center gap-2">
-        <img src={logo.src} className="max-h-8" alt={logo.alt} />
+        <Image src={logo.src} className="max-h-8" alt={logo.alt} width={32} height={32} />
         <span className="text-lg font-semibold tracking-tighter text-primary">{logo.title}</span>
     </Link>
 )
