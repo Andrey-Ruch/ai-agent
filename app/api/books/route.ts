@@ -23,7 +23,7 @@ export async function GET() {
 }
 
 // Create a new book for the current user
-export async function POST(request: Request) {
+export async function POST() {
     const authResult = await requireAuth()
 
     if (!authResult.isAuthenticated) {
