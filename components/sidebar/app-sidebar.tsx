@@ -23,11 +23,6 @@ import { LibraryBig, BookOpenText } from 'lucide-react'
 
 // This is sample data
 const data = {
-    user: {
-        name: 'User name',
-        email: 'user@example.com',
-        avatar: 'https://github.com/shadcn.png',
-    },
     navMain: [
         {
             name: 'Books',
@@ -86,9 +81,9 @@ export function AppSidebar({ session, ...props }: AppSidebarProps) {
     // TODO: The import of user information needs to be improved, the same data is also exported in NavBar.
     // A dedicated function should be considered.
     const user = {
-        name: session?.user?.name || 'User',
-        email: session?.user?.email || 'user@example.com',
-        avatar: session?.user?.image || 'https://github.com/shadcn.png',
+        name: session?.user?.name || '',
+        email: session?.user?.email || '',
+        avatar: session?.user?.image || '',
     }
     console.log('[AppSidebar] user', user)
 
@@ -103,7 +98,7 @@ export function AppSidebar({ session, ...props }: AppSidebarProps) {
                                     <Image src="/logo.svg" alt="Agatha" className="size-6" width={24} height={24} />
                                 </div>
                                 <div className="flex flex-col gap-0.5 leading-none">
-                                    <span className="font-semibold text-primary text-base">
+                                    <span className="font-semibold text-primary text-lg">
                                         Agatha
                                     </span>
                                 </div>

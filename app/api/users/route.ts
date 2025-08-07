@@ -1,7 +1,7 @@
 import { requireAuth } from '@/lib/auth/apiAuth'
-import { NextResponse } from 'next/server'
 import connectDB from '@/lib/database/mongodb'
-import User from '@/models/User'
+import { NextResponse } from 'next/server'
+import User from '@/lib/database/models/User'
 
 // TODO: The function is temporary and for testing! It needs to be changed.
 export async function GET(request: Request) {

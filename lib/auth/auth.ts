@@ -2,9 +2,7 @@ import NextAuth from 'next-auth'
 import { MongoDBAdapter } from '@auth/mongodb-adapter'
 import Google from 'next-auth/providers/google'
 import type { Provider } from 'next-auth/providers'
-import client from '@/lib/database/db'
-import connectDB from '@/lib/database/mongodb'
-import User from '@/models/User'
+import client from '@/lib/database/dbClient'
 
 const providers: Provider[] = [Google]
 

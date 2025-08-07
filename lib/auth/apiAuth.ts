@@ -14,6 +14,5 @@ export async function requireAuth() {
     return {
         isAuthenticated: true,
         session,
-        user: session.user,
     }
 }
