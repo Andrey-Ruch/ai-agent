@@ -85,7 +85,7 @@ export function AppSidebar({ session, ...props }: AppSidebarProps) {
         email: session?.user?.email || '',
         avatar: session?.user?.image || '',
     }
-    console.log('[AppSidebar] user', user)
+    console.log('[AppSidebar] session', session)
 
     return (
         <Sidebar collapsible="icon" {...props}>
@@ -95,7 +95,13 @@ export function AppSidebar({ session, ...props }: AppSidebarProps) {
                         <SidebarMenuButton size="lg" asChild>
                             <Link href="/">
                                 <div className="text-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                                    <Image src="/logo.svg" alt="Agatha" className="size-6" width={24} height={24} />
+                                    <Image
+                                        src="/logo.svg"
+                                        alt="Agatha"
+                                        className="size-6"
+                                        width={24}
+                                        height={24}
+                                    />
                                 </div>
                                 <div className="flex flex-col gap-0.5 leading-none">
                                     <span className="font-semibold text-primary text-lg">

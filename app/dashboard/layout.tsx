@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
     const session = await auth()
 
-    if (!session) {
+    if (!session?.user) {
         redirect('/signin')
     }
 

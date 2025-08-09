@@ -1,46 +1,22 @@
-'use client'
-
-import useSWR from 'swr'
+import { redirect } from 'next/navigation'
+import { auth } from '@/lib/auth/auth'
+import { getUserBooks } from '@/lib/database/queries/books'
+import { Suspense } from 'react'
 import Books from '@/components/Books'
 import Loading from '@/components/Loading'
-import ErrorMessage from '@/components/ErrorMessage'
 
-const fetcher = async (url: string) => {
-    const response = await fetch(url)
+export default async function BooksPage() {
+    const session = await auth()
 
-    if (!response.ok) {
-        const error = new Error(response.statusText)
-        throw error
+    if (!session?.user) {
+        redirect('/signin')
     }
 
-    return response.json()
-}
+    const books = await getUserBooks(session.user.id as string)
 
-export default function BooksPage() {
-    const { data, error, isLoading, mutate } = useSWR('/api/books', fetcher)
-
-    const handleCreateBook = async () => {
-        try {
-            const response = await fetch('/api/books', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-
-            if (response.ok) {
-                // Refresh the data after successful creation
-                mutate()
-            } else {
-                console.error('Failed to create book')
-            }
-        } catch (error) {
-            console.error('Error creating book:', error)
-        }
-    }
-
-    if (isLoading) return <Loading />
-    if (error) return <ErrorMessage message={error.message} />
-
-    return <Books books={data} onCreateBook={handleCreateBook} />
+    return (
+        <Suspense fallback={<Loading />}>
+            <Books books={books} />
+        </Suspense>
+    )
 }

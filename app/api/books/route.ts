@@ -7,6 +7,8 @@ import { NextResponse } from 'next/server'
 export async function GET() {
     const authResult = await requireAuth()
 
+    console.log('[api/books/route.ts] GET request', authResult)
+
     if (!authResult.isAuthenticated) {
         return authResult.response
     }

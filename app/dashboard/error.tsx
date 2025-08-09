@@ -16,7 +16,8 @@ export default function Error({
 
     return (
         <div className="flex flex-col items-center justify-center h-full">
-            <h2 className="text-base font-medium">Something went wrong!</h2>
+            <h2 className="text-base font-medium">Something went wrong</h2>
+            <p className="text-sm text-gray-500">Please contact the technical team</p>
             <Button
                 className="mt-4 hover:cursor-pointer"
                 onClick={
