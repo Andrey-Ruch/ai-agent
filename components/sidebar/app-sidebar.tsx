@@ -4,6 +4,7 @@ import * as React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Session } from 'next-auth'
+import { Book } from '@/lib/database/types/Book'
 
 // Components
 import { NavProjects } from '@/components/sidebar/nav-projects'
@@ -78,6 +79,58 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 }
 
 export function AppSidebar({ session, ...props }: AppSidebarProps) {
+    const [books, setBooks] = React.useState<Book[]>([])
+    const [isLoading, setIsLoading] = React.useState(true)
+
+    // Fetch user books
+    React.useEffect(() => {
+        async function fetchBooks() {
+            if (!session?.user?.id) {
+                setIsLoading(false)
+                return
+            }
+
+            try {
+                const response = await fetch('/api/books')
+                if (response.ok) {
+                    const booksData = await response.json()
+                    setBooks(booksData)
+                } else {
+                    console.error('Failed to fetch books:', response.status)
+                }
+            } catch (error) {
+                console.error('Error fetching books:', error)
+            } finally {
+                setIsLoading(false)
+            }
+        }
+
+        fetchBooks()
+    }, [session?.user?.id])
+
+    // Transform books data for NavProjects
+    const projects = React.useMemo(() => {
+        return books.map((book) => ({
+            title: book.title,
+            url: '#', // Adjust URL structure as needed
+            icon: BookOpenText,
+            items: [
+                {
+                    title: 'Chapter 1',
+                    url: '#',
+                },
+                {
+                    title: 'Chapter 2',
+                    url: '#',
+                },
+                {
+                    title: 'Chapter 3',
+                    url: '#',
+                },
+            ],
+        }))
+    }, [books])
+
     // TODO: The import of user information needs to be improved, the same data is also exported in NavBar.
     // A dedicated function should be considered.
     const user = {
@@ -115,7 +168,7 @@ export function AppSidebar({ session, ...props }: AppSidebarProps) {
             </SidebarHeader>
             <SidebarContent>
                 <NavMain items={data.navMain} />
-                <NavProjects projects={data.projects} />
+                <NavProjects projects={projects} />
             </SidebarContent>
             <SidebarFooter>
                 <NavUser user={user} />

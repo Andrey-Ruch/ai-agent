@@ -13,7 +13,7 @@ export default async function Page() {
             <NavBar session={session} />
             <div className="flex flex-col items-center justify-center">
                 <h1 className="mb-4 font-semibold">Home Page</h1>
-                <Button asChild>
+                <Button size="lg" asChild>
                     <Link href="/dashboard?agentConfig=ghostwriter">Start Writing</Link>
                 </Button>
             </div>

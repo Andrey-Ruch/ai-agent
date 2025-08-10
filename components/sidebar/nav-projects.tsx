@@ -33,15 +33,17 @@ export function NavProjects({
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">
             <SidebarGroupLabel>Workspace</SidebarGroupLabel>
             <SidebarMenu>
-                {projects.map((item) => (
+                {projects.map((item, index) => (
                     <Collapsible
-                        key={item.title}
+                        key={index}
                         asChild
                         defaultOpen={item.isActive}
                         className="group/collapsible">
                         <SidebarMenuItem>
                             <CollapsibleTrigger asChild>
-                                <SidebarMenuButton tooltip={item.title} className="hover:cursor-pointer">
+                                <SidebarMenuButton
+                                    tooltip={item.title}
+                                    className="hover:cursor-pointer">
                                     {item.icon && <item.icon className="size-6" />}
                                     <span>{item.title}</span>
                                     <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />

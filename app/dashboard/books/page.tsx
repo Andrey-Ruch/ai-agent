@@ -4,6 +4,7 @@ import { getUserBooks } from '@/lib/database/queries/books'
 import { Suspense } from 'react'
 import Books from '@/components/Books'
 import Loading from '@/components/Loading'
+import { Book } from '@/lib/database/types/Book'
 
 export default async function BooksPage() {
     const session = await auth()
@@ -12,7 +13,7 @@ export default async function BooksPage() {
         redirect('/signin')
     }
 
-    const books = await getUserBooks(session.user.id as string)
+    const books =  await getUserBooks(session.user.id as string)
 
     return (
         <Suspense fallback={<Loading />}>
