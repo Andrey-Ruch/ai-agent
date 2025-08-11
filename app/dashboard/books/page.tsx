@@ -1,23 +1,15 @@
-import { redirect } from 'next/navigation'
-import { auth } from '@/lib/auth/auth'
-import { getUserBooks } from '@/lib/database/queries/books'
-import { Suspense } from 'react'
-import Books from '@/components/Books'
+'use client'
+
 import Loading from '@/components/Loading'
-import { Book } from '@/lib/database/types/Book'
+import ErrorMessage from '@/components/ErrorMessage'
+import Books from '@/components/Books'
+import useBooks from '@/hooks/useBooks'
 
-export default async function BooksPage() {
-    const session = await auth()
+export default function BooksPage() {
+    const { books, isLoading, isError, mutate } = useBooks()
 
-    if (!session?.user) {
-        redirect('/signin')
-    }
+    if (isLoading) return <Loading />
+    if (isError) return <ErrorMessage message={isError.message} />
 
-    const books =  await getUserBooks(session.user.id as string)
-
-    return (
-        <Suspense fallback={<Loading />}>
-            <Books books={books} />
-        </Suspense>
-    )
+    return <Books books={books} mutate={mutate} />
 }

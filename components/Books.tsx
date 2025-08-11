@@ -1,7 +1,6 @@
 'use client'
 
-import { use, useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { BookPlus, Loader2Icon } from 'lucide-react'
 import { toast } from 'sonner'
@@ -18,16 +17,15 @@ async function createBook() {
     return response.json()
 }
 
-export default function Books({ books }: { books: any }) {
+export default function Books({ books, mutate }: { books: any; mutate: () => void }) {
     const [isLoading, setIsLoading] = useState(false)
-    const router = useRouter()
 
     async function handleCreateBook() {
         try {
             setIsLoading(true)
             await createBook()
             toast.success('Book created successfully')
-            router.refresh()
+            mutate()
         } catch (error) {
             console.error('[components/Books.tsx] Error in handleCreateBook()', error)
             toast.error('Failed to create book')

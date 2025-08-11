@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Session } from 'next-auth'
 import { Book } from '@/lib/database/types/Book'
+import useBooks from '@/hooks/useBooks'
 
 // Components
 import { NavProjects } from '@/components/sidebar/nav-projects'
@@ -79,57 +80,29 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 }
 
 export function AppSidebar({ session, ...props }: AppSidebarProps) {
-    const [books, setBooks] = React.useState<Book[]>([])
-    const [isLoading, setIsLoading] = React.useState(true)
+    const { books = [], isLoading, isError } = useBooks()
 
-    // Fetch user books
-    React.useEffect(() => {
-        async function fetchBooks() {
-            if (!session?.user?.id) {
-                setIsLoading(false)
-                return
-            }
-
-            try {
-                const response = await fetch('/api/books')
-                if (response.ok) {
-                    const booksData = await response.json()
-                    setBooks(booksData)
-                } else {
-                    console.error('Failed to fetch books:', response.status)
-                }
-            } catch (error) {
-                console.error('Error fetching books:', error)
-            } finally {
-                setIsLoading(false)
-            }
-        }
-
-        fetchBooks()
-    }, [session?.user?.id])
-
+    // TODO: This should be done in NavProjects
     // Transform books data for NavProjects
-    const projects = React.useMemo(() => {
-        return books.map((book) => ({
-            title: book.title,
-            url: '#', // Adjust URL structure as needed
-            icon: BookOpenText,
-            items: [
-                {
-                    title: 'Chapter 1',
-                    url: '#',
-                },
-                {
-                    title: 'Chapter 2',
-                    url: '#',
-                },
-                {
-                    title: 'Chapter 3',
-                    url: '#',
-                },
-            ],
-        }))
-    }, [books])
+    const projects = books.map((book: Book) => ({
+        title: book.title,
+        url: '#',
+        icon: BookOpenText,
+        items: [
+            {
+                title: 'Chapter 1',
+                url: '#',
+            },
+            {
+                title: 'Chapter 2',
+                url: '#',
+            },
+            {
+                title: 'Chapter 3',
+                url: '#',
+            },
+        ],
+    }))
 
     // TODO: The import of user information needs to be improved, the same data is also exported in NavBar.
     // A dedicated function should be considered.
@@ -138,7 +111,6 @@ export function AppSidebar({ session, ...props }: AppSidebarProps) {
         email: session?.user?.email || '',
         avatar: session?.user?.image || '',
     }
-    console.log('[AppSidebar] session', session)
 
     return (
         <Sidebar collapsible="icon" {...props}>
@@ -168,7 +140,7 @@ export function AppSidebar({ session, ...props }: AppSidebarProps) {
             </SidebarHeader>
             <SidebarContent>
                 <NavMain items={data.navMain} />
-                <NavProjects projects={projects} />
+                <NavProjects projects={projects} isLoading={isLoading} isError={isError} />
             </SidebarContent>
             <SidebarFooter>
                 <NavUser user={user} />
