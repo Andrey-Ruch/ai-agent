@@ -30,7 +30,6 @@ export default function MenuBar({ editor }: { editor: Editor }) {
 
         try {
             const base64 = await convertToBase64(file)
-            // console.log('[MenuBar handleImageUpload] base64', base64)
             editor.chain().focus().setImage({ src: base64 }).run()
         } catch (error) {
             console.error('Failed to upload image:', error)
