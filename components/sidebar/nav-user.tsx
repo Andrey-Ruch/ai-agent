@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { signOut } from 'next-auth/react'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -7,6 +8,7 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
+    DropdownMenuGroup,
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
@@ -17,7 +19,7 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from '@/components/ui/sidebar'
-import { ChevronsUpDown, LogOut } from 'lucide-react'
+import { ChevronsUpDown, CircleUserRound, LogOut } from 'lucide-react'
 
 export function NavUser({
     user,
@@ -70,6 +72,15 @@ export function NavUser({
                                 </div>
                             </div>
                         </DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuGroup>
+                            <DropdownMenuItem asChild className="cursor-pointer">
+                                <Link href="/dashboard/account">
+                                    <CircleUserRound />
+                                    Account
+                                </Link>
+                            </DropdownMenuItem>
+                        </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer">
                             <LogOut />

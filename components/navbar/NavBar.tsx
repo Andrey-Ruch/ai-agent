@@ -70,7 +70,7 @@ const DEFAULT_LOGO: LogoConfig = {
 }
 
 const DEFAULT_MENU: MenuItem[] = [
-    { title: 'Home', url: '#' },
+    { title: 'About', url: '#' },
     { title: 'Pricing', url: '#' },
 ]
 
