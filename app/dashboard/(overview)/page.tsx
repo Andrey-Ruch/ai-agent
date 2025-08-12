@@ -9,7 +9,7 @@ import { useFunctionResults } from '@/app/contexts/FunctionResultsContext'
 export default function Page() {
     const { functionResults } = useFunctionResults()
 
-    const [chapterContent, setChapterContent] = useState('\n\n')
+    const [chapterContent, setChapterContent] = useState('')
 
     // Listen for new generateChapterDraft results and update editor content
     useEffect(() => {

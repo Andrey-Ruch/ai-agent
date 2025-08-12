@@ -1,6 +1,5 @@
 import connectDB from '@/lib/database/mongodb'
 import Book from '@/lib/database/models/Book'
-import { Book as BookType } from '@/lib/database/types/Book'
 
 export async function getUserBooks(userId: string) {
     try {
