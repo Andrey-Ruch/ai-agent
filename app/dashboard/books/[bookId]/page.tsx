@@ -4,6 +4,9 @@
 import { use } from 'react'
 import { useState } from 'react'
 
+// Next
+import Link from 'next/link'
+
 // Hooks
 import useChapters from '@/hooks/useChapters'
 
@@ -16,6 +19,8 @@ import { ListPlus, Loader2Icon } from 'lucide-react'
 
 export default function BookPage({ params }: { params: Promise<{ bookId: string }> }) {
     const { bookId } = use(params)
+
+    // TODO: There is no need to fetch the entire chapter with all its fields (such as content, etc.)
     const { chapters, isLoading, isError, mutate } = useChapters(bookId)
     const [isLoadingNewChapter, setIsLoadingNewChapter] = useState(false)
 
@@ -56,6 +61,8 @@ export default function BookPage({ params }: { params: Promise<{ bookId: string 
         }
     }
 
+    console.log('chapters', chapters)
+
     return (
         <div className="p-2">
             <h1 className="text-2xl font-bold mb-2">Book Page</h1>
@@ -77,7 +84,12 @@ export default function BookPage({ params }: { params: Promise<{ bookId: string 
             <ul>
                 {chapters.map((chapter: any, index: number) => (
                     <li key={chapter._id}>
-                        {index + 1}. {chapter.title}
+                        {index + 1}.
+                        <Button asChild variant="link">
+                            <Link href={`/dashboard/books/${bookId}/chapters/${chapter._id}`}>
+                                {chapter.title}
+                            </Link>
+                        </Button>
                     </li>
                 ))}
             </ul>

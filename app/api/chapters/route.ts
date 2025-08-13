@@ -22,7 +22,8 @@ export async function GET(request: Request) {
             return NextResponse.json({ message: 'Book ID is required' }, { status: 400 })
         }
 
-        const chapters = await Chapter.find({ bookId })
+        // Fetch chapters for the book excluding content field to reduce response size
+        const chapters = await Chapter.find({ bookId }).select('-content')
 
         return NextResponse.json(chapters)
     } catch (error) {
