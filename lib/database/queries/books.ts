@@ -7,9 +7,6 @@ export async function getUserBooks(userId: string) {
         
         // Returns plain objects for fast serialization
         const docs = await Book.find({ authorId: userId }).lean()
-
-        console.log('[lib/database/queries/books.ts] getUserBooks() docs', docs)
-
         const books = docs.map((d: any) => ({
             id: d._id?.toString?.(),
             authorId: d.authorId?.toString?.(),
@@ -18,7 +15,6 @@ export async function getUserBooks(userId: string) {
             updatedAt: d.updatedAt ? new Date(d.updatedAt).toISOString() : '',
         }))
 
-        console.log('[lib/database/queries/books.ts] getUserBooks() books', books)
         return books
     } catch (error) {
         console.error('[lib/database/queries/books.ts] Error in getUserBooks()', error)
