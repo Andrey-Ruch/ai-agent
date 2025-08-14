@@ -22,7 +22,7 @@ export function NavProjects({
 }: {
     projects: {
         title: string
-        url: string
+        id: string
         icon?: LucideIcon
         isActive?: boolean
         items?: {

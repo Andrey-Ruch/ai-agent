@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { Session } from 'next-auth'
 import { Book } from '@/lib/database/types/Book'
 import useBooks from '@/hooks/useBooks'
+import { useChapters } from '@/hooks/useChapters'
 
 // Components
 import { NavProjects } from '@/components/sidebar/nav-projects'
@@ -86,8 +87,9 @@ export function AppSidebar({ session, ...props }: AppSidebarProps) {
     // Transform books data for NavProjects
     const projects = books.map((book: Book) => ({
         title: book.title,
-        url: '#',
+        id: book._id,
         icon: BookOpenText,
+        isActive: false,
         items: [
             {
                 title: 'Chapter 1',
@@ -113,6 +115,7 @@ export function AppSidebar({ session, ...props }: AppSidebarProps) {
     }
 
     return (
+        // Sidebar documentation with structure diagram: https://ui.shadcn.com/docs/components/sidebar
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
                 <SidebarMenu>
@@ -121,7 +124,7 @@ export function AppSidebar({ session, ...props }: AppSidebarProps) {
                             <Link href="/">
                                 <div className="text-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                                     <Image
-                                        src="/logo.svg"
+                                        src="/square-logo.svg"
                                         alt="Agatha"
                                         className="size-6"
                                         width={24}
