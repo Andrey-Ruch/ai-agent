@@ -30,13 +30,12 @@ export default function BookPage({ params }: { params: Promise<{ bookId: string 
     async function handleNewChapter() {
         try {
             setIsLoadingNewChapter(true)
-            const response = await fetch('/api/chapters', {
+            const response = await fetch(`/api/books/${bookId}/chapters`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    bookId,
                     title: 'New Chapter',
                     content: 'Start writing your chapter here...',
                 }),
@@ -46,13 +45,13 @@ export default function BookPage({ params }: { params: Promise<{ bookId: string 
                 throw new Error('Failed to create chapter')
             }
 
-            toast.success('Chapter created successfully')
-
             const newChapter = await response.json()
             console.log('New chapter created:', newChapter)
 
             // Refresh the chapters list
             mutate()
+
+            toast.success('Chapter created successfully')
         } catch (error) {
             console.error('Error creating chapter:', error)
             toast.error('Failed to create chapter. Please try again.')

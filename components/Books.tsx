@@ -30,8 +30,8 @@ export default function Books({ books, mutate }: { books: any; mutate: () => voi
         try {
             setIsLoading(true)
             await createBook()
-            toast.success('Book created successfully')
             mutate()
+            toast.success('Book created successfully')
         } catch (error) {
             console.error('[components/Books.tsx] Error in handleNewBook()', error)
             toast.error('Failed to create book')

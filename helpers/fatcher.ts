@@ -1,5 +1,11 @@
-export async function fetcher(url: string) {
-    const response = await fetch(url)
+export async function fetcher(url: string, options?: RequestInit) {
+    const response = await fetch(url, {
+        headers: {
+            'Content-Type': 'application/json',
+            ...options?.headers,
+        },
+        ...options,
+    })
 
     if (!response.ok) {
         const error = new Error(response.statusText)

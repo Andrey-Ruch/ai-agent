@@ -4,7 +4,7 @@
 import { use } from 'react'
 
 // Hooks
-import useChapters from '@/hooks/useChapters'
+// import useChapters from '@/hooks/useChapters'
 
 export default function ChapterPage({ params }: { params: Promise<{ bookId: string; chapterId: string }> }) {
     const { bookId, chapterId } = use(params)

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { requireAuth } from '@/lib/auth/apiAuth'
+import { requireAuth } from '@/lib/api/apiAuth'
 import connectDB from '@/lib/database/mongodb'
 import Book from '@/lib/database/models/Book'
 
@@ -18,7 +18,7 @@ export async function GET() {
         return NextResponse.json(books)
     } catch (error) {
         console.error('[api/books/route.ts] Error in GET request', error)
-        return NextResponse.json({ message: 'Internal server error' }, { status: 500 })
+        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 })
     }
 }
 
@@ -44,6 +44,6 @@ export async function POST() {
         return NextResponse.json(savedBook)
     } catch (error) {
         console.error('[api/books/route.ts] Error in POST request', error)
-        return NextResponse.json({ message: 'Internal server error' }, { status: 500 })
+        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 })
     }
 }
