@@ -6,7 +6,10 @@ import Book from '@/lib/database/models/Book'
 import mongoose from 'mongoose'
 
 // Get a specific chapter
-export async function GET({ params }: { params: { bookId: string; chapterId: string } }) {
+export async function GET(
+    request: Request,
+    { params }: { params: { bookId: string; chapterId: string } }
+) {
     const authResult = await requireAuth()
 
     if (!authResult.isAuthenticated) {
