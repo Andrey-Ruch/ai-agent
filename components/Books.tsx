@@ -1,6 +1,12 @@
 'use client'
 
+// React
 import { useState } from 'react'
+
+// Next
+import Link from 'next/link'
+
+// Components
 import { Button } from '@/components/ui/button'
 import { BookPlus, Loader2Icon } from 'lucide-react'
 import { toast } from 'sonner'
@@ -20,14 +26,14 @@ async function createBook() {
 export default function Books({ books, mutate }: { books: any; mutate: () => void }) {
     const [isLoading, setIsLoading] = useState(false)
 
-    async function handleCreateBook() {
+    async function handleNewBook() {
         try {
             setIsLoading(true)
             await createBook()
-            toast.success('Book created successfully')
             mutate()
+            toast.success('Book created successfully')
         } catch (error) {
-            console.error('[components/Books.tsx] Error in handleCreateBook()', error)
+            console.error('[components/Books.tsx] Error in handleNewBook()', error)
             toast.error('Failed to create book')
         } finally {
             setIsLoading(false)
@@ -35,15 +41,26 @@ export default function Books({ books, mutate }: { books: any; mutate: () => voi
     }
 
     return (
-        <div className="p-1">
+        <div>
             <p>
                 Number of your books: <span className="font-bold">{books.length}</span>
             </p>
 
+            <ul>
+                {books.map((book: any, index: number) => (
+                    <li key={book._id}>
+                        {index + 1}.
+                        <Button asChild variant="link">
+                            <Link href={`/dashboard/books/${book._id}`}>{book.title}</Link>
+                        </Button>
+                    </li>
+                ))}
+            </ul>
+
             <Button
-                className="mt-2 cursor-pointer"
+                className="mt-4 cursor-pointer"
                 size="sm"
-                onClick={handleCreateBook}
+                onClick={handleNewBook}
                 disabled={isLoading}>
                 {isLoading ? <Loader2Icon className="animate-spin" /> : <BookPlus />} New book
             </Button>

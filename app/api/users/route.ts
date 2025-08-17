@@ -1,4 +1,4 @@
-import { requireAuth } from '@/lib/auth/apiAuth'
+import { requireAuth } from '@/lib/api/apiAuth'
 import connectDB from '@/lib/database/mongodb'
 import { NextResponse } from 'next/server'
 import User from '@/lib/database/models/User'
@@ -20,6 +20,6 @@ export async function GET(request: Request) {
         return NextResponse.json(users)
     } catch (error) {
         console.error('[api/users/route.ts] Error in GET request', error)
-        return NextResponse.json({ message: 'Internal server error' }, { status: 500 })
+        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 })
     }
 }

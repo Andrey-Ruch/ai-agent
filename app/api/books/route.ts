@@ -1,13 +1,11 @@
-import { requireAuth } from '@/lib/auth/apiAuth'
+import { NextResponse } from 'next/server'
+import { requireAuth } from '@/lib/api/apiAuth'
 import connectDB from '@/lib/database/mongodb'
 import Book from '@/lib/database/models/Book'
-import { NextResponse } from 'next/server'
 
 // Get all books for the current user
 export async function GET() {
     const authResult = await requireAuth()
-
-    console.log('[api/books/route.ts] GET request', authResult)
 
     if (!authResult.isAuthenticated) {
         return authResult.response
@@ -20,7 +18,7 @@ export async function GET() {
         return NextResponse.json(books)
     } catch (error) {
         console.error('[api/books/route.ts] Error in GET request', error)
-        return NextResponse.json({ message: 'Internal server error' }, { status: 500 })
+        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 })
     }
 }
 
@@ -40,17 +38,12 @@ export async function POST() {
             authorId: authResult?.session?.user?.id,
             title: 'New Book',
         }
-
-        console.log('[api/books/route.ts] newBook', newBook, '\n\n')
-
         const book = new Book(newBook)
         const savedBook = await book.save()
-
-        console.log('[api/books/route.ts] savedBook', savedBook, '\n\n')
 
         return NextResponse.json(savedBook)
     } catch (error) {
         console.error('[api/books/route.ts] Error in POST request', error)
-        return NextResponse.json({ message: 'Internal server error' }, { status: 500 })
+        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 })
     }
 }
