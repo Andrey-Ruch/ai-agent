@@ -76,7 +76,7 @@ export default function TipTapEditor({ content, onChange }: TipTapEditorProps) {
 
     return (
         // In the calc function, 3rem refers to the height of the header in dashboard/layout.tsx
-        <div className="h-[calc(100vh-3rem)] p-2">
+        <div className="h-full flex flex-col">
             {/* Simple-editor-wrapper */}
             <div
                 className={`flex flex-col max-w-2xl mx-auto h-full gap-2 rounded-lg bg-white border transition-all duration-300 ${

@@ -41,7 +41,11 @@ export default function Page() {
             </ResizablePanel>
             <ResizableHandle withHandle />
             <ResizablePanel defaultSize={50} minSize={25}>
-                <TipTapEditor content={chapterContent} onChange={onChapterContentChange} />
+                <div className="h-full flex flex-col items-center gap-2 p-2">
+                    <div className="flex-1 min-h-0">
+                        <TipTapEditor content={chapterContent} onChange={onChapterContentChange} />
+                    </div>
+                </div>
             </ResizablePanel>
         </ResizablePanelGroup>
     )
