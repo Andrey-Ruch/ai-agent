@@ -5,7 +5,7 @@ import Book from '@/lib/database/models/Book'
 import mongoose from 'mongoose'
 
 // Get a single book by ID
-export async function GET({ params }: { params: Promise<{ bookId: string }> }) {
+export async function GET(request: Request, { params }: { params: Promise<{ bookId: string }> }) {
     const authResult = await requireAuth()
 
     if (!authResult.isAuthenticated) {
@@ -100,7 +100,10 @@ export async function PUT(request: Request, { params }: { params: Promise<{ book
 }
 
 // Delete a single book by ID
-export async function DELETE(request: Request, { params }: { params: Promise<{ bookId: string }> }) {
+export async function DELETE(
+    request: Request,
+    { params }: { params: Promise<{ bookId: string }> }
+) {
     const authResult = await requireAuth()
 
     if (!authResult.isAuthenticated) {
