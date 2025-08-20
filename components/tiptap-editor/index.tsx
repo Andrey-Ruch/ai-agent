@@ -76,10 +76,10 @@ export default function TipTapEditor({ content, onChange }: TipTapEditorProps) {
 
     return (
         // In the calc function, 3rem refers to the height of the header in dashboard/layout.tsx
-        <div className="h-full flex flex-col">
+        <div className="h-[calc(100vh-7rem)] flex flex-col">
             {/* Simple-editor-wrapper */}
             <div
-                className={`flex flex-col max-w-2xl mx-auto h-full gap-2 rounded-lg bg-white border transition-all duration-300 ${
+                className={`flex flex-col w-full max-w-2xl mx-auto h-full gap-2 rounded-lg bg-white border transition-all duration-300 ${
                     isContentUpdating ? 'ring-2 ring-green-400 ring-opacity-75' : ''
                 }`}>
                 <MenuBar editor={editor} />

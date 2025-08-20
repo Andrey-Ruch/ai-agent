@@ -44,7 +44,8 @@ function ChapterList({
             {chapters.map((chapter) => (
                 <SidebarMenuSubItem key={chapter._id}>
                     <SidebarMenuSubButton asChild isActive={activeChapterId === chapter._id}>
-                        <Link href={`/dashboard/books/${bookId}/chapters/${chapter._id}`}>
+                        <Link
+                            href={`/dashboard/books/${bookId}/chapters/${chapter._id}?agentConfig=ghostwriter`}>
                             {chapter.title}
                         </Link>
                     </SidebarMenuSubButton>
@@ -102,9 +103,7 @@ function ProjectCollapsible({ book }: { book: Book }) {
             className="group/collapsible">
             <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
-                    <SidebarMenuButton
-                        tooltip={book.title}
-                        className="hover:cursor-pointer">
+                    <SidebarMenuButton tooltip={book.title} className="hover:cursor-pointer">
                         {book.icon && <book.icon className="size-6" />}
                         <span>{book.title}</span>
                         <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
