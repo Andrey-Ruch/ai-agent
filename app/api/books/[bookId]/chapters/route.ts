@@ -6,7 +6,7 @@ import Book from '@/lib/database/models/Book'
 import mongoose from 'mongoose'
 
 // Get all chapters for a specific book
-export async function GET(request: Request, { params }: { params: { bookId: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ bookId: string }> }) {
     const authResult = await requireAuth()
 
     if (!authResult.isAuthenticated) {
@@ -46,7 +46,7 @@ export async function GET(request: Request, { params }: { params: { bookId: stri
 }
 
 // Create a new chapter for a specific book
-export async function POST(request: Request, { params }: { params: { bookId: string } }) {
+export async function POST(request: Request, { params }: { params: Promise<{ bookId: string }> }) {
     const authResult = await requireAuth()
 
     if (!authResult.isAuthenticated) {
