@@ -1,7 +1,7 @@
 'use client'
 
 import AssistantCard from './AssistantCard'
-import { useEffect, useState } from 'react'
+// import { useEffect, useState } from 'react'
 import { StaticImageData } from 'next/image'
 
 interface AssistantProps {
