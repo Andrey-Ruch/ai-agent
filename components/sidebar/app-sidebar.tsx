@@ -3,6 +3,7 @@
 import * as React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { Session } from 'next-auth'
 import { Book } from '@/lib/database/types/Book'
 import useBooks from '@/hooks/useBooks'
@@ -40,17 +41,25 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 
 export function AppSidebar({ session, ...props }: AppSidebarProps) {
     const { books = [], isLoading, isError } = useBooks()
+    const pathname = usePathname()
+
+    const pathSegments = pathname.split('/')
+    const currentBookId = pathSegments.includes('books')
+        ? pathSegments[pathSegments.indexOf('books') + 1]
+        : null
+    const currentChapterId = pathSegments.includes('chapters')
+        ? pathSegments[pathSegments.indexOf('chapters') + 1]
+        : null
 
     // Transform books data for NavProjects
     const projects = books.map((book: Book) => ({
         title: book.title,
         id: book._id,
         icon: BookOpenText,
-        isActive: false,
+        isActive: currentBookId === book._id,
+        activeChapterId: currentBookId === book._id ? currentChapterId : null,
     }))
 
-    // TODO: The import of user information needs to be improved, the same data is also exported in NavBar.
-    // A dedicated function should be considered.
     const user = {
         name: session?.user?.name || '',
         email: session?.user?.email || '',

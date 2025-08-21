@@ -85,7 +85,8 @@ export default function BookPage({ params }: { params: Promise<{ bookId: string 
                     <li key={chapter._id}>
                         {index + 1}.
                         <Button asChild variant="link">
-                            <Link href={`/dashboard/books/${bookId}/chapters/${chapter._id}`}>
+                            <Link
+                                href={`/dashboard/books/${bookId}/chapters/${chapter._id}?agentConfig=ghostwriter`}>
                                 {chapter.title}
                             </Link>
                         </Button>

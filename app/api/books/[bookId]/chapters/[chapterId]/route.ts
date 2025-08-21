@@ -8,7 +8,7 @@ import mongoose from 'mongoose'
 // Get a specific chapter
 export async function GET(
     request: Request,
-    { params }: { params: { bookId: string; chapterId: string } }
+    { params }: { params: Promise<{ bookId: string; chapterId: string }> }
 ) {
     const authResult = await requireAuth()
 
@@ -60,7 +60,7 @@ export async function GET(
 // Update a specific chapter
 export async function PUT(
     request: Request,
-    { params }: { params: { bookId: string; chapterId: string } }
+    { params }: { params: Promise<{ bookId: string; chapterId: string }> }
 ) {
     const authResult = await requireAuth()
 
@@ -135,7 +135,7 @@ export async function PUT(
 // Delete a specific chapter
 export async function DELETE(
     request: Request,
-    { params }: { params: { bookId: string; chapterId: string } }
+    { params }: { params: Promise<{ bookId: string; chapterId: string }> }
 ) {
     const authResult = await requireAuth()
 

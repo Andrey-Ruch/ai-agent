@@ -202,7 +202,7 @@ export default function Transcript({
                     size="icon"
                     onClick={onSendMessage}
                     disabled={!canSend || !userText.trim()}
-                    className="hover:cursor-pointer rounded-full self-end">
+                    className="hover:cursor-pointer rounded-lg self-end">
                     <ArrowUp className="size-6" />
                 </Button>
             </div>

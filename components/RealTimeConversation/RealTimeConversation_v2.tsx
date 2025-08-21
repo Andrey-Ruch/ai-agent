@@ -382,8 +382,8 @@ export default function RealTimeConversation_v2() {
         }
     }, [sessionStatus])
 
-    const agentSetKey = searchParams.get('agentConfig') || 'default'
-    console.log('[RealTimeConversation_v2] agentSetKey:', agentSetKey)
+    // const agentSetKey = searchParams.get('agentConfig') || 'default'
+    // console.log('[RealTimeConversation_v2] agentSetKey:', agentSetKey)
 
     return (
         // In the calc function, 3rem refers to the height of the header in dashboard/layout.tsx

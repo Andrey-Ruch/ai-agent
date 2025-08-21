@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useChapters from '@/hooks/useChapters'
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
@@ -15,23 +15,80 @@ import {
     SidebarMenuSubButton,
     SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
-import { ChevronRight, type LucideIcon } from 'lucide-react'
+import { type LucideIcon, ChevronRight } from 'lucide-react'
 
-function BookCollapsible({
-    book,
-    index,
+interface Book {
+    id: string
+    title: string
+    icon?: LucideIcon
+    isActive?: boolean
+    activeChapterId?: string | null
+}
+
+interface Chapter {
+    _id: string
+    title: string
+}
+
+function ChapterList({
+    chapters,
+    bookId,
+    activeChapterId,
 }: {
-    book: {
-        title: string
-        id: string
-        icon?: LucideIcon
-        isActive?: boolean
-    }
-    index: number
+    chapters: Chapter[]
+    bookId: string
+    activeChapterId: string | null | undefined
 }) {
+    return (
+        <>
+            {chapters.map((chapter) => (
+                <SidebarMenuSubItem key={chapter._id}>
+                    <SidebarMenuSubButton asChild isActive={activeChapterId === chapter._id}>
+                        <Link
+                            href={`/dashboard/books/${bookId}/chapters/${chapter._id}?agentConfig=ghostwriter`}>
+                            {chapter.title}
+                        </Link>
+                    </SidebarMenuSubButton>
+                </SidebarMenuSubItem>
+            ))}
+        </>
+    )
+}
+
+function ChaptersContent({
+    chapters,
+    isLoading,
+    isError,
+    bookId,
+    activeChapterId,
+}: {
+    chapters: Chapter[]
+    isLoading: boolean
+    isError: boolean
+    bookId: string
+    activeChapterId: string | null | undefined
+}) {
+    function getMessageClasses() {
+        return 'px-2 py-1 text-sm text-muted-foreground'
+    }
+
+    if (isLoading) return <div className={getMessageClasses()}>Loading chapters...</div>
+    if (isError) return <div className={getMessageClasses()}>Error loading chapters</div>
+    if (chapters.length === 0) return <div className={getMessageClasses()}>No chapters yet</div>
+
+    return <ChapterList chapters={chapters} bookId={bookId} activeChapterId={activeChapterId} />
+}
+
+function ProjectCollapsible({ book }: { book: Book }) {
     const [isOpen, setIsOpen] = useState(false)
-    // console.log('\nbook\n', book)
     const { chapters = [], isLoading, isError } = useChapters(isOpen ? book.id : '')
+
+    // Update local state when book.isActive changes (when URL changes)
+    useEffect(() => {
+        if (book.isActive && !isOpen) {
+            setIsOpen(true)
+        }
+    }, [book.isActive, isOpen])
 
     const handleOpenChange = (open: boolean) => {
         setIsOpen(open)
@@ -39,7 +96,7 @@ function BookCollapsible({
 
     return (
         <Collapsible
-            key={index}
+            key={book.id}
             asChild
             defaultOpen={book.isActive}
             onOpenChange={handleOpenChange}
@@ -53,7 +110,7 @@ function BookCollapsible({
                     </SidebarMenuButton>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                    <SidebarMenuSub>
+                    {/* <SidebarMenuSub>
                         {isLoading ? (
                             <SidebarMenuSubItem>
                                 <div className="px-2 py-1 text-sm text-muted-foreground">
@@ -84,6 +141,16 @@ function BookCollapsible({
                                 </SidebarMenuSubItem>
                             ))
                         )}
+                    </SidebarMenuSub> */}
+
+                    <SidebarMenuSub>
+                        <ChaptersContent
+                            chapters={chapters}
+                            isLoading={isLoading}
+                            isError={isError}
+                            bookId={book.id}
+                            activeChapterId={book.activeChapterId}
+                        />
                     </SidebarMenuSub>
                 </CollapsibleContent>
             </SidebarMenuItem>
@@ -96,22 +163,17 @@ export function NavProjects({
     isLoading,
     isError,
 }: {
-    projects: {
-        title: string
-        id: string
-        icon?: LucideIcon
-        isActive?: boolean
-    }[]
+    projects: Book[]
     isLoading: boolean
     isError: boolean
 }) {
-    if (isError) return <div className="px-4 text-red-600 text-sm">Error loading books</div>
+    if (isError) return <div className="px-4 text-sm text-red-600">Error loading books</div>
 
     return (
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">
             <SidebarGroupLabel>Workspace</SidebarGroupLabel>
             {isLoading ? (
-                <div className="p-2 text-sm">Loading...</div>
+                <div className="p-2 text-sm text-muted-foreground">Loading...</div>
             ) : (
                 <SidebarMenu>
                     {projects.map((item, index) => (
@@ -146,7 +208,7 @@ export function NavProjects({
                         //     </SidebarMenuItem>
                         // </Collapsible>
 
-                        <BookCollapsible key={item.id} book={item} index={index} />
+                        <ProjectCollapsible key={index} book={item} />
                     ))}
                 </SidebarMenu>
             )}
