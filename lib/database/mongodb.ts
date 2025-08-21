@@ -1,5 +1,8 @@
 import mongoose from 'mongoose'
-
+import { auth } from '@/lib/auth/auth'
+import User from './models/User'
+import { isEmpty } from 'lodash'
+import { UserData } from '@/interfaces/documents'
 const MONGODB_URI = process.env.MONGODB_URI!
 
 if (!MONGODB_URI) {
@@ -41,5 +44,72 @@ async function connectDB() {
 
     return cached.conn
 }
+async function getUser() {
+    await connectDB()
 
+    try {
+        const session = await auth()
+
+        let usrData = null
+        if (session?.user) {
+            const usr = session.user
+            usrData = await User.findOne({ email: usr.email }).lean()
+            if (isEmpty(usrData)) {
+                return { user: {} }
+            }
+            // logToFile('User: ' + JSON.stringify(usrData), logType.info)
+            return { user: usrData }
+        } else {
+            return { user: {} }
+        }
+    } catch (error) {
+        console.error('Error fetching user:', error)
+        return { user: {} }
+    }
+}
+async function updateUser(user: UserData) {
+    await connectDB()
+    try {
+        const session = await auth()
+        let usrData = null
+        if (session?.user) {
+            const usr = session.user
+            usrData = await User.findOne({ email: usr.email })
+            if (isEmpty(usrData)) {
+                // logToFile('User not found: ' + usr.email, logType.error)
+                usrData = User.create({
+                    name: user.name || usr.name,
+                    email: usr.email,
+                    icon: user.icon,
+                    language: user.language,
+                    phone: user.phone,
+                    gender: user.gender,
+                    status: 'active',
+                    subscription: 'free',
+                    assistant: user.assistant || 'Emma',
+                })
+
+            } else {
+                usrData.name = user.name
+                usrData.icon = user.icon
+                usrData.language = user.language
+                usrData.auth = user.auth
+                usrData.phone = user.phone
+                usrData.nickName = user.nickName
+                usrData.gender = user.gender
+                usrData.status = user.status
+                usrData.assistant = user.assistant || 'Emma'
+                // usrData.subscription = user.subscription;
+                usrData.save();
+                console.log("User updated:", usrData);
+
+            }
+        }
+        // logToFile('User updated: ' + JSON.stringify(usrData), logType.debug)
+    } catch (error) {
+        console.error('Error updating user:', error)
+        throw error
+    }
+}
 export default connectDB
+export { getUser, updateUser }
