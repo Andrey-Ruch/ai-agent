@@ -19,7 +19,7 @@ export default async function SignInPage(props: {
     const session = await auth()
 
     if (session) {
-        redirect('/dashboard?agentConfig=ghostwriter')
+        redirect('/dashboard/books')
     }
 
     const searchParams = await props.searchParams
@@ -87,7 +87,7 @@ export default async function SignInPage(props: {
                                                     await signIn(provider.id, {
                                                         redirectTo:
                                                             searchParams.callbackUrl ??
-                                                            '/dashboard?agentConfig=ghostwriter',
+                                                            '/dashboard/books',
                                                     })
                                                 } catch (error) {
                                                     // Signin can fail for a number of reasons, such as the user
