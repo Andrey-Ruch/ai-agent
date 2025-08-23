@@ -1,22 +1,24 @@
-import {
-    bookWithChapters
-  } from "@/interfaces/book";
+import { bookWithChapters } from '@/interfaces/book'
 // import { toRoman } from "./gerateTableOfContents";
-import { getResources } from "@/locales";
-export function generateBookHTML(
+import { getResources } from '@/locales'
 
+export function generateBookHTML(
     book: bookWithChapters,
-    tableOfContents: { pageNumber: number; title: string , romanNumber:string, chaptherNumber:number}[],
+    tableOfContents: {
+        pageNumber: number
+        title: string
+        romanNumber: string
+        chaptherNumber: number
+    }[],
     nickName: string,
     language: string
-  ): string {
-    const AUTHOR = language === "he-IL" ? "מאת" : "Author";
-    const resources = getResources(language);
+): string {
+    const AUTHOR = language === 'he-IL' ? 'מאת' : 'Author'
+    const resources = getResources(language)
     // <h2 class="book-author">${AUTHOR}: ${nickName}</h2>
-    console.log("Generating HTML for book:", book.book.title,AUTHOR,nickName,language);
-    const TABLE_OF_CONTENTS =
-    language === "he-IL" ? "תוכן עניינים" : "Table of Contents";
-  
+    console.log('Generating HTML for book:', book.book.title, AUTHOR, nickName, language)
+    const TABLE_OF_CONTENTS = language === 'he-IL' ? 'תוכן עניינים' : 'Table of Contents'
+
     return `
       <!DOCTYPE html>
       <html>
@@ -34,7 +36,7 @@ export function generateBookHTML(
               max-width: 800px;
               margin: 0 auto;
               padding: 20px;
-              direction: ${language === "he-IL" ? "rtl" : "ltr"};
+              direction: ${language === 'he-IL' ? 'rtl' : 'ltr'};
             }
             img {
               max-width: 100% !important;
@@ -125,21 +127,21 @@ export function generateBookHTML(
           <div class="chapter">
             <h2 class="chapter-title">${TABLE_OF_CONTENTS}</h2>
             ${tableOfContents
-              .map(
-                (chapter) => `
+                .map(
+                    (chapter) => `
               <div class="toc-entry">
                 <span>${chapter.title}</span>
                 <span class="toc-dots"></span>
                 <span> ${resources.editor.chapterLabel} ${chapter.chaptherNumber}</span>
               </div>
             `
-              )
-              .join("")}
+                )
+                .join('')}
           </div>
   
           ${book.chapters
-            .map(
-              (chapter) => `
+              .map(
+                  (chapter) => `
             <div class="chapter">
               <h2 id="c_${chapter._id}" class="chapter-title">
             ${chapter.title}
@@ -148,18 +150,17 @@ export function generateBookHTML(
               
             </div>
           `
-            )
-            .join("")}
+              )
+              .join('')}
         </body>
       </html>
-    `;
-
-  }
-  // ${
-  //               chapter.images
-  //               ?.map(
-  //                 (image) => `
-  //               <img class="chapter-image" src="${image}" alt="Chapter illustration" />
-  //             `
-  //               )
-  //               .join("")}
+    `
+}
+// ${
+//               chapter.images
+//               ?.map(
+//                 (image) => `
+//               <img class="chapter-image" src="${image}" alt="Chapter illustration" />
+//             `
+//               )
+//               .join("")}
