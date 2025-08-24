@@ -7,14 +7,15 @@ import NavBar from '@/components/navbar/NavBar'
 // import { Button } from '@/components/ui/button'
 
 import ResponsiveImg from '@/components/ui/ResponsiveImg'
-import BooksRow from '@/components/homePage/BooksRow/BooksRow'
-import FeatureCard from '@/components/homePage/FeatureCard'
-import AssistantSlider from '@/components/homePage/AssistantSlider'
-import Footer from '@/components/homePage/Footer'
+import BooksRow from '@/components/home/BooksRow/BooksRow'
+import FeatureCard from '@/components/home/FeatureCard'
+import AssistantSlider from '@/components/home/AssistantSlider'
+import Footer from '@/components/home/Footer'
 import mainImg from '@/public/images/homepage/main.jpg'
 // Data
 import { booksData } from '@/data/books'
 import { assistantsData } from '@/data/assistants'
+import { Button } from '@/components/ui/button'
 
 export default async function HomePage() {
     const session = await auth()
@@ -63,12 +64,9 @@ export default async function HomePage() {
                         </p>
 
                         <div className="mt-6 flex items-center justify-center gap-x-6">
-                            <Link
-                                href={'/dashboard?agentConfig=ghostwriter'}
-                                //   hasbook ? "/covers" : "/chat/book/0"
-                                className="rounded-3xl bg-main px-3.5 py-2 font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 hover:bg-main/90">
-                                {resources.home.buttonText}
-                            </Link>
+                            <Button size="lg" asChild>
+                                <Link href="/dashboard/books">{resources.home.buttonText}</Link>
+                            </Button>
                         </div>
                     </div>
 
@@ -99,13 +97,6 @@ export default async function HomePage() {
                     <Footer resources={resources} />
                 </div>
             </>
-
-            {/* <div className="flex flex-col items-center justify-center">
-                <h1 className="mb-4 font-semibold">Home Page</h1>
-                <Button size="lg" asChild>
-                    <Link href="/dashboard?agentConfig=ghostwriter">Start Writing</Link>
-                </Button>
-            </div> */}
         </div>
     )
 }

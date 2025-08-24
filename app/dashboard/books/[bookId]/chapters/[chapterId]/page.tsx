@@ -13,9 +13,8 @@ import useChapter from '@/hooks/useChapter'
 import Loading from '@/components/Loading'
 import ErrorMessage from '@/components/ErrorMessage'
 import RealTimeConversation_v2 from '@/components/RealTimeConversation/RealTimeConversation_v2'
-import TipTapEditor from '@/components/tiptap-editor'
+import ChapterEditor from '@/components/ChapterEditor'
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable'
-import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 
 export default function ChapterPage({
@@ -27,49 +26,55 @@ export default function ChapterPage({
     const { chapter, isLoading, isError, updateChapter } = useChapter(bookId, chapterId)
     const { functionResults } = useFunctionResults()
 
+    const [chapterTitle, setChapterTitle] = useState('')
     const [chapterContent, setChapterContent] = useState('')
     const [isSaving, setIsSaving] = useState(false)
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
 
     useEffect(() => {
-        if (chapter?.content) {
-            setChapterContent(chapter.content)
+        if (chapter) {
+            setChapterTitle(chapter.title || '')
+            setChapterContent(chapter.content || '')
             setHasUnsavedChanges(false)
         }
-    }, [chapter?.content])
+    }, [chapter])
 
     // Listen for new generateChapterDraft results and update editor content
     useEffect(() => {
-        console.log('\nfunctionResults', functionResults)
-
         const latestChapterDraft = functionResults
             .filter((result) => result.functionName === 'generate_chapter_draft')
             .at(-1)
 
-        console.log('\nlatestChapterDraft', latestChapterDraft)
-
         if (latestChapterDraft?.result) {
             const { title, text } = latestChapterDraft.result
+            setChapterTitle(title)
+            setChapterContent(text)
 
             // Format the content with title as heading and text as body
-            const formattedContent = `<h1>${title}</h1><p>${text}</p>`
-
-            setChapterContent(formattedContent)
+            // const formattedContent = `<h1>${title}</h1><p>${text}</p>`
+            // setChapterContent(formattedContent)
         }
     }, [functionResults])
 
+    function onChapterTitleChange(title: string) {
+        setChapterTitle(title)
+        setHasUnsavedChanges(title !== chapter?.title || chapterContent !== chapter?.content)
+    }
+
     function onChapterContentChange(content: string) {
         setChapterContent(content)
-        setHasUnsavedChanges(content !== chapter?.content)
-        console.log('onChapterContentChange content:\n', content)
+        setHasUnsavedChanges(chapterTitle !== chapter?.title || content !== chapter?.content)
     }
 
     async function handleSave() {
-        if (!hasUnsavedChanges) return
+        if (!hasUnsavedChanges || !chapterTitle.trim() || isSaving) return
 
         try {
             setIsSaving(true)
-            await updateChapter({ content: chapterContent })
+            await updateChapter({
+                title: chapterTitle,
+                content: chapterContent,
+            })
             setHasUnsavedChanges(false)
             toast.success('Chapter saved successfully')
         } catch (error) {
@@ -92,21 +97,15 @@ export default function ChapterPage({
             </ResizablePanel>
             <ResizableHandle withHandle />
             <ResizablePanel defaultSize={50} minSize={25}>
-                {/* Editor panel with button below */}
-                <div className="h-full flex flex-col items-center gap-2 p-2">
-                    <div className="flex-1 min-h-0">
-                        <TipTapEditor content={chapterContent} onChange={onChapterContentChange} />
-                    </div>
-
-                    <Button
-                        onClick={handleSave}
-                        disabled={!hasUnsavedChanges || isSaving}
-                        
-                        className="cursor-pointer">
-                        {isSaving ? 'Saving...' : 'Save'}
-                    </Button>
-                </div>
-                {/* <TipTapEditor content={chapterContent} onChange={onChapterContentChange} /> */}
+                <ChapterEditor
+                    title={chapterTitle}
+                    content={chapterContent}
+                    hasUnsavedChanges={hasUnsavedChanges}
+                    isSaving={isSaving}
+                    onTitleChange={onChapterTitleChange}
+                    onContentChange={onChapterContentChange}
+                    onSave={handleSave}
+                />
             </ResizablePanel>
         </ResizablePanelGroup>
     )
