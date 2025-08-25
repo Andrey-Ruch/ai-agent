@@ -138,6 +138,8 @@ export function useRealtimeSession(callbacks: RealtimeSessionCallbacks = {}) {
             const codecParam = codecParamRef.current
             const audioFormat = audioFormatForCodec(codecParam)
 
+            console.log('\n[useRealtimeSession] extraContext', extraContext)
+
             sessionRef.current = new RealtimeSession(rootAgent, {
                 transport: new OpenAIRealtimeWebRTC({
                     audioElement,

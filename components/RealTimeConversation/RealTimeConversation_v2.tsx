@@ -69,13 +69,14 @@ export default function RealTimeConversation_v2() {
         }
     }, [sdkAudioElement])
 
-    const { connect, disconnect, sendUserText, sendEvent, interrupt, mute, isAgentResponding } = useRealtimeSession({
-        onConnectionChange: (s) => setSessionStatus(s as SessionStatus),
-        onAgentHandoff: (agentName: string) => {
-            handoffTriggeredRef.current = true
-            setSelectedAgentName(agentName)
-        },
-    })
+    const { connect, disconnect, sendUserText, sendEvent, interrupt, mute, isAgentResponding } =
+        useRealtimeSession({
+            onConnectionChange: (s) => setSessionStatus(s as SessionStatus),
+            onAgentHandoff: (agentName: string) => {
+                handoffTriggeredRef.current = true
+                setSelectedAgentName(agentName)
+            },
+        })
 
     const [sessionStatus, setSessionStatus] = useState<SessionStatus>('DISCONNECTED')
 
@@ -222,18 +223,24 @@ export default function RealTimeConversation_v2() {
     }
 
     const updateSession = (shouldTriggerResponse: boolean = false) => {
+        // const serverVAD = {
+        //     type: 'server_vad',
+        //     threshold: 0.9,
+        //     prefix_padding_ms: 300,
+        //     silence_duration_ms: 500,
+        //     create_response: true,
+        // }
+
+        const semanticVAD = {
+            type: 'semantic_vad',
+            eagerness: 'auto',
+            create_response: true,
+        }
+
         // Reflect Push-to-Talk UI state by (de)activating server VAD on the
         // backend. The Realtime SDK supports live session updates via the
         // `session.update` event.
-        const turnDetection = isPTTActive
-            ? null
-            : {
-                  type: 'server_vad',
-                  threshold: 0.9,
-                  prefix_padding_ms: 300,
-                  silence_duration_ms: 500,
-                  create_response: true,
-              }
+        const turnDetection = isPTTActive ? null : semanticVAD
 
         sendEvent({
             type: 'session.update',
